@@ -1,0 +1,305 @@
+# GIT HOOKS & PRE-COMMIT CONFIGURATION
+# Repository: /Users/moofasa/cohs
+# Last Updated: 2026-02-10
+# ============================================================================
+
+## PURPOSE
+Git hooks are automated scripts that run at specific points in the git workflow.
+This document describes hooks you can use to improve code quality.
+
+## AVAILABLE HOOKS
+
+### Pre-commit Hook
+Runs before you commit. Use for:
+- Linting checks
+- Format validation
+- Preventing secrets from being committed
+
+Location: .git/hooks/pre-commit
+
+```bash
+#!/bin/bash
+# Example pre-commit hook
+
+# Check for PHP syntax errors
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.php$'); do
+  php -l "$file" > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "PHP syntax error in: $file"
+    exit 1
+  fi
+done
+
+# Check for .env or sensitive files
+if git diff --cached --name-only | grep -E '\.env|secret|password|key'; then
+  echo "ERROR: Attempt to commit sensitive files!"
+  exit 1
+fi
+
+exit 0
+```
+
+### Pre-push Hook
+Runs before you push. Use for:
+- Running tests
+- Validation checks
+- Preventing broken code from reaching main branch
+
+Location: .git/hooks/pre-push
+
+```bash
+#!/bin/bash
+# Example pre-push hook
+
+echo "Running pre-push checks..."
+
+# Prevent pushing to main without a PR
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$current_branch" == "main" ]]; then
+  echo "ERROR: Cannot push directly to main branch"
+  echo "Please create a pull request instead"
+  exit 1
+fi
+
+exit 0
+```
+
+### Post-checkout Hook
+Runs after switching branches. Use for:
+- Updating dependencies
+- Refreshing cached data
+
+Location: .git/hooks/post-checkout
+
+## INSTALLATION
+
+### Manual Setup
+
+1. Create hook file in .git/hooks/:
+```bash
+touch .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+2. Edit the file with your script
+
+3. Test:
+```bash
+.git/hooks/pre-commit
+```
+
+### Using a Hooks Directory (Recommended)
+
+To share git hooks across team:
+
+1. Create a git_hooks directory:
+```bash
+mkdir -p git_hooks
+```
+
+2. Create your hooks:
+```bash
+# git_hooks/pre-commit
+#!/bin/bash
+# Your hook code here
+chmod +x git_hooks/pre-commit
+```
+
+3. Configure git to use this directory:
+```bash
+git config core.hooksPath git_hooks
+```
+
+4. Verify:
+```bash
+git config core.hooksPath
+```
+
+## RECOMMENDED HOOKS FOR THIS PROJECT
+
+### 1. Prevent Committing Large Files
+```bash
+#!/bin/bash
+# Prevent files larger than 10MB
+
+MAX_SIZE=$((10 * 1024 * 1024))  # 10MB in bytes
+
+for file in $(git diff --cached --name-only); do
+  if [ -f "$file" ]; then
+    size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+    if [ "$size" -gt "$MAX_SIZE" ]; then
+      echo "ERROR: File too large: $file ($(($size / (1024*1024)))MB > 10MB)"
+      exit 1
+    fi
+  fi
+done
+
+exit 0
+```
+
+### 2. Prevent Committing Sensitive Files
+```bash
+#!/bin/bash
+# Prevent secrets from being committed
+
+forbidden_patterns=(".env" "secrets" "password" ".pem" ".key" ".token")
+
+for pattern in "${forbidden_patterns[@]}"; do
+  if git diff --cached --name-only | grep -i "$pattern"; then
+    echo "ERROR: Attempted to commit sensitive file containing: $pattern"
+    exit 1
+  fi
+done
+
+exit 0
+```
+
+### 3. PHP Syntax Check
+```bash
+#!/bin/bash
+# Check PHP files for syntax errors
+
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.php$'); do
+  php -l "$file" > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "PHP syntax error in: $file"
+    echo "Run: php -l $file"
+    exit 1
+  fi
+done
+
+exit 0
+```
+
+### 4. Check for Debug Code
+```bash
+#!/bin/bash
+# Prevent committing debug statements
+
+dangerous_patterns=("var_dump" "console.log" "debugger" "print_r" "dd(" "todo" "fixme" "hack")
+
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+  for pattern in "${dangerous_patterns[@]}"; do
+    if git diff --cached -- "$file" | grep -i "$pattern"; then
+      echo "WARNING: Found debug code in $file: $pattern"
+      echo "Consider removing before committing"
+    fi
+  done
+done
+
+exit 0
+```
+
+## BEST PRACTICES
+
+1. **Keep hooks lightweight**
+   - Should run in < 1 second
+   - Otherwise developers disable them
+
+2. **Provide clear error messages**
+   - Help developers understand what went wrong
+   - Suggest fixes when possible
+
+3. **Make hooks skippable**
+   - Use: git commit --no-verify (skip pre-commit)
+   - Use: git push --force (skip pre-push)
+   - For emergencies only!
+
+4. **Version control your hooks**
+   - Keep hooks in git_hooks/ directory
+   - Document in this file
+   - Make executable: chmod +x
+
+5. **Test hooks**
+   - Run manually before committing
+   - Test with various scenarios
+
+## IMPLEMENTATION STEPS
+
+### Step 1: Create git_hooks directory (optional but recommended)
+```bash
+mkdir -p git_hooks
+```
+
+### Step 2: Create and test a hook
+Example - Save as git_hooks/pre-commit:
+```bash
+#!/bin/bash
+# Prevent large files
+
+MAX_SIZE=$((5 * 1024 * 1024))  # 5MB
+
+for file in $(git diff --cached --name-only); do
+  if [ -f "$file" ]; then
+    size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+    if [ "$size" -gt "$MAX_SIZE" ]; then
+      echo "File too large: $file"
+      exit 1
+    fi
+  fi
+done
+exit 0
+```
+
+### Step 3: Make executable
+```bash
+chmod +x git_hooks/pre-commit
+```
+
+### Step 4: Configure repository to use hooks
+```bash
+git config core.hooksPath git_hooks
+```
+
+### Step 5: Verify
+```bash
+git config core.hooksPath
+# Should output: git_hooks
+```
+
+### Step 6: Commit
+```bash
+git add git_hooks/
+git commit -m "add: git pre-commit hooks"
+```
+
+## TROUBLESHOOTING
+
+### Hook not running
+Check:
+1. File is executable: chmod +x .git/hooks/pre-commit
+2. Has shebang: #!/bin/bash at top
+3. Is in .git/hooks/ or git_hooks/ with core.hooksPath set
+
+### Need to skip hook
+```bash
+git commit --no-verify    # Skip pre-commit
+git push --no-verify      # Skip pre-push
+```
+
+### Hook is too slow
+- Reduce checks
+- Use faster tools
+- Consider async checking
+
+## ADVANCED: HUSKY (Node.js projects)
+
+If using Node.js, consider Husky for easier hook management:
+
+```bash
+npm install husky --save-dev
+npx husky install
+npx husky add .husky/pre-commit "npm run lint"
+```
+
+## REFERENCES
+- Git Hooks Documentation: https://git-scm.com/docs/githooks
+- Pro Git Book (Customizing Git): https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+- Husky (Node.js): https://typicode.github.io/husky/
+
+## NOTES
+- Hooks are local to each copy of the repository
+- Share hooks directory with team via git
+- Set core.hooksPath to enable shared hooks
+- Hooks do not automatically transfer to cloned repos
+- Team members must run: git config core.hooksPath git_hooks

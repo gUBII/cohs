@@ -1,0 +1,386 @@
+# GIT REPOSITORY MAINTENANCE GUIDE
+# Repository: /Users/moofasa/cohs
+# Last Updated: 2026-02-10
+# ============================================================================
+
+## PURPOSE
+Regular repository maintenance keeps your git database clean, efficient, and reliable.
+
+## MAINTENANCE CHECKLIST
+
+### DAILY / WEEKLY
+
+- [ ] **Before every push**
+  ```bash
+  git status              # Review changes
+  git diff               # Review content
+  git push origin        # Push to remote
+  ```
+
+- [ ] **Check status**
+  ```bash
+  git status
+  git diff --name-status
+  ```
+
+### MONTHLY
+
+- [ ] **Optimize repository**
+  ```bash
+  git gc
+  ```
+
+- [ ] **Review large files**
+  ```bash
+  git ls-files -s | sort -k4 -n -r | head -20
+  ```
+
+- [ ] **Check repository size**
+  ```bash
+  du -sh .git
+  du -sh .
+  ```
+
+- [ ] **Verify remote tracking**
+  ```bash
+  git remote -v
+  git branch -v
+  ```
+
+### QUARTERLY
+
+- [ ] **Deep cleanup (if > 5GB)**
+  ```bash
+  git gc --aggressive
+  ```
+
+- [ ] **Review .gitignore**
+  - Check for new file types to ignore
+  - Test: git check-ignore -v *
+
+- [ ] **Update documentation**
+  - Verify GIT_OPERATIONS.txt is current
+  - Update team on changes
+
+- [ ] **Archive old branches**
+  ```bash
+  git branch -v
+  # Delete old branches
+  # git branch -d branch_name
+  ```
+
+## PERFORMANCE MONITORING
+
+### Check Repository Size
+```bash
+# Current size
+du -sh .git
+
+# History
+echo "$(date): $(du -sh .git | cut -f1)" >> git_size_log.txt
+```
+
+### Analyze Large Objects
+```bash
+# Find largest files currently tracked
+git ls-files -s | sort -k4 -n -r | head
+
+# Find largest objects in history
+git rev-list --all --objects | \
+  sed -n $(git rev-list --objects --all | \
+  cut -f1 -d' ' | \
+  git cat-file --batch-check | \
+  grep blob | \
+  cut -d' ' -f1 | \
+  sort -k3 -n -r | \
+  head -10 | \
+  while read hash; do \
+    echo -n "-e s/$hash/$hash/p "; \
+  done) | \
+  cut -d' ' -f2- | \
+  sort -k1 -n -r | head
+```
+
+## CLEANUP OPERATIONS
+
+### Remove Files from Tracking
+
+**Scenario: Accidentally committed large file**
+
+1. Remove from tracking (keep locally):
+```bash
+git rm --cached large_file.zip
+echo "large_file.zip" >> .gitignore
+git add .gitignore
+git commit -m "Remove large_file.zip from tracking"
+```
+
+2. Remove from entire history (dangerous!):
+```bash
+# Install git-filter-repo if needed
+brew install git-filter-repo
+
+# Remove file from all commits
+git filter-repo --path large_file.zip --invert-paths
+
+# Force push
+git push --force
+```
+
+### Remove Directory from Tracking
+
+```bash
+# Remove all files in media/ from tracking
+git rm --cached -r media/
+# Keep media/.gitkeep
+git add media/.gitkeep
+git commit -m "Remove media directory from tracking"
+```
+
+### Delete Old Branches
+
+```bash
+# List branches
+git branch -v
+
+# Delete local branch
+git branch -d branch_name
+git branch -D branch_name  # Force delete
+
+# Delete remote branch
+git push origin --delete branch_name
+```
+
+## OPTIMIZATION
+
+### Basic Optimization
+```bash
+# Standard garbage collection
+git gc
+
+# Shows what it's doing
+git gc --verbose
+```
+
+### Aggressive Optimization
+```bash
+# Deep optimization (takes longer)
+git gc --aggressive
+
+# With verbosity
+git gc --aggressive --verbose
+```
+
+### When to Use Aggressive
+- Repository > 500MB
+- Many loose objects (git count-objects)
+- Performance degradation noticed
+- Quarterly maintenance
+
+## SAFETY CHECKS
+
+### Before Performing Maintenance
+
+1. **Backup**
+```bash
+cp -r .git .git.backup
+```
+
+2. **Verify remote is up to date**
+```bash
+git fetch
+git log main..origin/main
+```
+
+3. **Check for uncommitted changes**
+```bash
+git status
+```
+
+### Verify After Maintenance
+
+1. **Test integrity**
+```bash
+git fsck
+```
+
+2. **Verify history**
+```bash
+git log --oneline | head -20
+git log --oneline | tail -20
+```
+
+3. **Check repository structure**
+```bash
+git show HEAD
+git show HEAD:file.php  # Check a tracked file
+```
+
+## RECOVERY PROCEDURES
+
+### Recover Deleted Branch
+
+```bash
+# List all reflog entries
+git reflog
+
+# Find the deletion
+# Example: d0d3d3d HEAD@{5}: commit: feature added
+
+# Recover
+git checkout -b recovered_branch d0d3d3d
+```
+
+### Recover Deleted File
+
+```bash
+# Find when file was deleted
+git log --diff-filter=D --summary | grep delete
+
+# Recover file
+git checkout parents_commit -- file_path
+```
+
+### Recover Mistaken Commit
+
+```bash
+# Find commit
+git reflog          # or
+git log --all
+
+# Recover
+git reset --hard commit_hash
+```
+
+## MONITORING TOOLS
+
+### Count Objects
+```bash
+git count-objects -v
+```
+Output explains:
+- count: Current loose objects
+- size: Size in KB
+- in-pack: Objects in pack files
+- packs: Number of pack files
+- size-pack: Pack file size
+
+### Repository Integrity Check
+```bash
+git fsck
+```
+Reports:
+- Dangling commits (unreachable)
+- Broken refs
+- Missing objects
+
+### Show Disk Usage
+```bash
+git count-objects -vH
+
+# Or detailed:
+du -h .git/objects
+```
+
+## AUTOMATED MAINTENANCE
+
+### Create Cron Job (macOS/Linux)
+
+```bash
+# Edit crontab
+crontab -e
+
+# Add line for weekly maintenance:
+# (Every Sunday at 2 AM)
+0 2 * * 0 cd /Users/moofasa/cohs && /usr/bin/git gc
+
+# With logging:
+0 2 * * 0 cd /Users/moofasa/cohs && /usr/bin/git gc >> ~/.logs/git_maintenance.log 2>&1
+```
+
+### Create Scheduled Task (Windows)
+
+1. Task Scheduler > Create Basic Task
+2. Trigger: Weekly, Sunday 2 AM
+3. Action: Run program: C:\Program Files\Git\bin\git.exe
+4. Arguments: -C "C:\path\to\cohs" gc
+
+## BEST PRACTICES
+
+1. **Regular maintenance**
+   - Monthly: git gc
+   - Quarterly (if large): git gc --aggressive
+   - Annual: Review and cleanup
+
+2. **Monitor size**
+   - Set alert if > 5GB
+   - Investigate if > 10GB
+   - Archive projects if > 20GB
+
+3. **Keep backups**
+   - Backup before major operations
+   - Test recovery procedures
+   - Keep off-site backups
+
+4. **Document changes**
+   - Keep MAINTENANCE_LOG.txt
+   - Record large deletions
+   - Note performance improvements
+
+5. **Team communication**
+   - Notify before force pushing
+   - Document cleanup operations
+   - Share maintenance results
+
+## MAINTENANCE LOG TEMPLATE
+
+```
+# GIT MAINTENANCE LOG
+# Repository: /Users/moofasa/cohs
+
+## 2026-02-10
+- Created .gitignore and optimization files
+- Set up .gitattributes for line endings
+- Repository size: 3.1GB (.git)
+- Tracked files: 8,888
+- Action: Next cleanup - remove media/ and database_backup/ from tracking
+
+## [DATE]
+- Summary of maintenance performed
+- Size before/after
+- Issues found/resolved
+```
+
+## RESOURCES
+
+- Git Maintenance: https://git-scm.com/docs/git-gc
+- Git fsck: https://git-scm.com/docs/git-fsck
+- Git Internals: https://git-scm.com/book/en/v2/Git-Internals
+- Repository Optimization: https://git-scm.com/docs/git-count-objects
+
+## TROUBLESHOOTING
+
+### Repository Getting Slow
+1. Check size: du -sh .git
+2. Run gc: git gc --aggressive
+3. Verify: git fsck
+4. Consider splitting repo
+
+### Large packs forming
+- This is normal
+- Can repack: git repack -Ad
+- Part of gc process
+
+### Maintenance taking too long
+- Run during off-hours
+- Use git gc instead of --aggressive
+- Consider background job
+
+## NEXT STEPS
+
+- [ ] Review current size: du -sh .git
+- [ ] Schedule monthly maintenance
+- [ ] Set up automated gc if desired
+- [ ] Create MAINTENANCE_LOG.txt
+- [ ] Test recovery procedures
+- [ ] Plan cleanup of tracked media files
