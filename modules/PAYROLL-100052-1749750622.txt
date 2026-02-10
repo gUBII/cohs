@@ -1,0 +1,5 @@
+Employee Co./Last Name,Employee First Name,Payroll Category,Job,Customer Co./Last Name,Customer First Name,Notes,Date,Units,Employee Card ID,Employee Record ID,Start/Stop Time,Customer Card ID,Customer Record ID
+El Zein,Ahlam,Base Hourly,NDIS - Plan Managed,,,n/a,03/06/2025,06:00,,09:30 am,,100083
+El Zein,Ahlam,Base Hourly,NDIS - Plan Managed,,,n/a,04/06/2025,06:00,,09:30 am,,100083
+El Zein,Ahlam,Base Hourly,NDIS - Plan Managed,,,n/a,10/06/2025,04:09,,09:30 am,,100083
+El Zein,Ahlam,Base Hourly,NDIS - Plan Managed,,,n/a,11/06/2025,06:00,,09:30 am,,100083

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Say voice="alice">Welcome to Nexis365. This call is being recorded. Please continue speaking.</Say>
+    <Record 
+        maxLength="120"
+        action="https://www.fufoon.com/tools/call/hangup.php"
+        recordingStatusCallback="https://www.fufoon.com/tools/call/save_call.php"
+        recordingStatusCallbackMethod="POST"
+        />
+</Response>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Gather numDigits="1" action="https://fufoon.com/tools/call/handle_key.php" method="POST">
+        <Say voice="alice">Welcome to Nexis365. 
+            Press 1 to speak with Hasan. 
+            Press 2 to speak with Client A. 
+            Press 3 to speak with Support.
+        </Say>
+    </Gather>
+    <Say voice="alice">We didn't receive any input. Goodbye.</Say>
+    <Hangup/>
+</Response>

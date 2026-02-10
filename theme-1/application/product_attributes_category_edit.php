@@ -1,0 +1,55 @@
+<?php
+
+    include("auth.php");
+
+    echo"<div class='row'>
+            <div class='col-md-8'><h4 class='content-title card-title'>Attributes Editor</h2></div>
+            <div class='col-md-4'><button class='btn btn-primary' onclick=\"shiftdataV1('product_attributes', 'datashiftX')\">Add New</button></div>
+    </div><hr>
+
+    <form method='post' name='categorysection' autocomplete='off' action='dataprocessor.php' target='dataprocessor' enctype='multipart/form-data' id='loginForm' class='tooltip-end-bottom' novalidate >";
+        if(isset($_GET["mid"])) $mid=$_GET["mid"];
+        else $mid=0;
+        if($_GET["mid"]!=0){
+            $s1x = "select * from product_attribute_cat where id='$mid' order by id asc limit 1";
+            $r1x = $conn->query($s1x);
+            if ($r1x->num_rows > 0) { while($rs1x = $r1x->fetch_assoc()) {
+                echo"<input type=hidden name='processor' value='updateattributes'><input type=hidden name='id' value='".$rs1x["id"]."'>
+                <div class='row border-bottom mb-4 pb-4'>
+                    <div class='col-md-6' style='margin-top:15px'><label class='form-label'>Name</label><input class='form-control' type='text' name='name' placeholder='Type here' value='".$rs1x["name"]."'></div>
+                    <div class='col-md-6' style='margin-top:15px'><label class='form-label'>Status</label>
+                        <select class='form-select' name='status' required=''>
+                            <option value='".$rs1x["status"]."'>".$rs1x["status"]."</option><option value='ON'>ON</option><option value='OFF'>OFF</option>
+                        </select>
+                    </div>
+                    <div class='col-md-12' style='margin-top:15px'><hr></div>
+                    <div class='col-md-12' style='margin-top:15px'>
+                        <button class='btn btn-primary' type='submit' onblur=\"shiftdataV1('product_attributes', 'datashiftX')\">Update</button> &nbsp;  
+                        <button class='btn btn-light rounded font-md' type='reset'>Reset</button> &nbsp; 
+                        <a href='dataprocessor.php?processor=deletetask&delid=".$rs1x["id"]."&tbl=product_attribute_cat' target='dataprocessor'>
+                            <button class='btn btn-danger rounded font-md' type='button' onblur=\"shiftdataV1('product_attributes', 'datashiftX')\">Delete</button>
+                        </a>
+                    </div>
+                </div>";
+            } }
+        }else{
+            echo"<input type=hidden name='processor' value='addattributes'>
+            <div style='padding:0px'>
+                <div class='row border-bottom mb-4 pb-4'>
+                    <div class='col-md-6' style='margin-top:15px'><label class='form-label'>Name</label><input class='form-control' type='text' name='name' placeholder='Type here' value=''></div>
+                    <div class='col-md-6' style='margin-top:15px'><label class='form-label'>Status</label>
+                        <select class='form-select' name='status' required=''>
+                            <option value='ON'>ON</option><option value='OFF'>OFF</option>
+                        </select>
+                    </div>
+                    <div class='col-md-12' style='margin-top:15px'><hr></div>
+                    <div class='col-md-12' style='margin-top:15px'>
+                        <button class='btn btn-primary' type='submit' onblur=\"shiftdataV1('product_attributes', 'datashiftX')\">Save</button> &nbsp;  
+                        <button class='btn btn-light rounded font-md' type='reset'>Reset</button>
+                    </div>
+                </div>
+            </div>";
+        }
+    echo"</form>";
+    
+?>

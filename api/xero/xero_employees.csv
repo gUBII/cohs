@@ -1,0 +1,13 @@
+"First Name","Last Name",DOB,Email,"Start Date",Gender,"Job Title","Employment Basis",Address,City,State,Postcode,Phone
+Zahid,Doe,1985-06-15,zahid.cse15@gmail.com,2023-01-10,M,"Software Engineer",FULL-TIME,"123 Main St",Sydney,NSW,2000,0412345678
+Raihan,Smith,1990-08-22,raihan@nexis365.com,2023-07-01,F,"HR Manager",PART-TIME,"456 Elm St",Melbourne,VIC,3001,0400123456
+John,Doe,1992-03-10,john.doe@email.com,2022-08-15,M,Accountant,FULL-TIME,"789 Pine St",Brisbane,QLD,4000,0423456789
+Emily,Johnson,1987-07-22,emily.johnson@email.com,2021-05-20,F,"Marketing Manager",PART-TIME,"567 Oak St",Perth,WA,6000,0434567890
+Michael,Brown,1980-12-05,michael.brown@email.com,2023-02-01,M,"Data Scientist",FULL-TIME,"234 Birch St",Adelaide,SA,5000,0445678901
+David,Williams,1995-09-18,david.williams@email.com,2023-04-11,M,"Sales Executive",CASUAL,"678 Cedar St",Canberra,ACT,2600,0456789012
+Sophia,Miller,1993-06-29,sophia.miller@email.com,2021-11-25,F,"Software Developer",FULL-TIME,"890 Redwood St","Gold Coast",QLD,4217,0467890123
+James,Anderson,1988-04-14,james.anderson@email.com,2020-06-30,M,"IT Support",PART-TIME,"345 Spruce St",Hobart,TAS,7000,0478901234
+Isabella,Taylor,1991-11-08,isabella.taylor@email.com,2022-09-18,F,"Project Manager",FULL-TIME,"901 Maple St",Darwin,NT,0800,0489012345
+Ethan,Clark,1985-02-17,ethan.clark@email.com,2019-03-15,M,"HR Coordinator",CASUAL,"456 Palm St",Newcastle,NSW,2300,0490123456
+Ava,Harris,1996-05-21,ava.harris@email.com,2023-07-10,F,"Graphic Designer",PART-TIME,"123 Willow St",Wollongong,NSW,2500,0401234567
+Oliver,Lee,1982-08-30,oliver.lee@email.com,2020-12-01,M,"Business Analyst",FULL-TIME,"678 Ash St",Geelong,VIC,3220,0412345678
