@@ -126,6 +126,9 @@ dist/
 release/
 *.zip
 *.tar.gz
+*.bundle
+*.bundle.*
+cohs_bundle_local/
 
 # ============================================================================
 # DEPENDENCY DIRECTORIES
