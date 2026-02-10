@@ -1,0 +1,154 @@
+# GIT OPERATIONS GUIDE
+# Repository: /Users/moofasa/cohs
+# Last Updated: 2026-02-10
+# ============================================================================
+
+## OVERVIEW
+This document provides best practices for git operations in this repository.
+
+## REPOSITORY STRUCTURE
+- .gitignore: Root-level configuration excluding unnecessary files
+- tools/.gitignore: Tool-specific ignores (Node.js, npm, etc.)
+- media/: NOT TRACKED (see .gitignore)
+- database_backup/: NOT TRACKED (see .gitignore)
+- uploads/: NOT TRACKED (see .gitignore)
+
+## KEY FILES IGNORED
+[SYSTEM FILES]
+- .DS_Store, .AppleDouble, ._* (macOS files)
+- Thumbs.db, ehthumbs.db (Windows files)
+
+[LOGS]
+- error_log (6.1GB - CRITICAL to ignore)
+- *.log, npm-debug.log, yarn-*.log
+- pids, *.pid
+
+[DEVELOPMENT]
+- node_modules/ (dependencies)
+- vendor/ (Composer dependencies)
+- .env (environment configs)
+
+[IDE]
+- .vscode/, .idea/, .sublime-* (IDE configs)
+- .history/, .vscodehistory (history files)
+
+[MEDIA & BACKUPS]
+- media/*, uploads/ (large files)
+- database_backup/ (backup files)
+- theme-1/media/ (theme assets)
+
+## CURRENT STATUS
+- Total tracked files: ~8,888
+- WARNING: Many large files still being tracked
+- Next step: Clean up git history (see CLEANUP SECTION)
+
+## COMMON COMMANDS
+
+### Check Status
+git status
+git log --oneline -5
+git diff
+
+### Stage & Commit
+git add <file>
+git add .
+git commit -m "message"
+
+### View Ignored Files
+git check-ignore -v *
+git check-ignore -v <path>
+
+### Check What's Tracked
+git ls-files | grep <pattern>
+git ls-files --others --ignored --exclude-standard
+
+### Remove Files from Tracking (AFTER .gitignore is updated)
+# Remove from tracking but keep locally:
+git rm --cached <file>
+git rm --cached -r <directory>
+
+# Then commit:
+git commit -m "Remove <file> from tracking"
+
+## CLEANUP PROCEDURE (OPTIONAL - when ready)
+The following large files are currently tracked and should be removed:
+
+### Step 1: Remove media files from tracking
+git rm --cached -r media/
+git rm --cached -r theme-1/media/
+git rm --cached -r uploads/
+
+### Step 2: Remove database backups
+git rm --cached -r database_backup/
+
+### Step 3: Remove large logs
+git rm --cached error_log
+
+### Step 4: Commit the cleanup
+git commit -m "Remove large files from git tracking (.gitignore applied)"
+
+### Step 5: Optimize repository
+git gc --aggressive
+
+## BEST PRACTICES
+
+1. Before Adding Files
+   - Check .gitignore to see what's excluded
+   - Only add source code, not generated files
+   - Never add secrets, passwords, or .env files
+
+2. Before Committing
+   - Review: git diff
+   - Test commits: git status
+   - Use meaningful commit messages
+
+3. Repository Maintenance
+   - Regularly review tracked files: git ls-files | wc -l
+   - Check for accidental large files: git ls-files -s | sort -k4 -n -r | head -20
+   - Keep .git clean: git gc
+
+4. Collaborative Work
+   - Pull before push: git pull origin <branch>
+   - Create branches for features: git checkout -b feature/name
+   - Use descriptive commits: git commit -m "feat: add feature X" or "fix: resolve issue Y"
+
+## TROUBLESHOOTING
+
+### Git Index Lock
+If you get "index.lock" error:
+rm .git/index.lock
+
+### Large Repository
+Current size: ~3.1GB
+To reduce:
+1. Use git gc --aggressive
+2. Remove old backups from history
+3. Filter branches if needed: git filter-branch
+
+### Accidentally Tracked Large Files
+git rm --cached <file>
+mkdir -p <directory>
+touch <directory>/.gitkeep
+git add <directory>/.gitkeep
+git commit -m "Remove large file from tracking"
+
+## IMPORTANT NOTES
+- .gitignore was created on 2026-02-10
+- error_log (6.1GB) contains runtime logs - should NOT be tracked
+- media/ (3.7GB) contains assets - should NOT be tracked
+- database_backup/ (182MB) contains exports - should NOT be tracked
+
+## NEXT STEPS
+1. Commit the new .gitignore
+2. Run git rm --cached on large unnecessary files
+3. Optimize with: git gc --aggressive
+4. Push to remote: git push origin
+
+## USEFUL ALIASES (Optional)
+Add to ~/.zshrc:
+alias gs='git status'
+alias gc='git commit -m'
+alias gd='git diff'
+alias ga='git add'
+alias gl='git log --oneline -10'
+alias glg='git log --graph --oneline --all'
