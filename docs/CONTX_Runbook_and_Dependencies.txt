@@ -1,5 +1,5 @@
 CONTX_Runbook_and_Dependencies
-Purpose: step-by-step local/preview setup for the PHP SaaS app. Color chips: CORE, DATA, API, UI, RISK (HTML colored spans used in other docs).
+Purpose: step-by-step local/preview setup for the PHP SaaS app. Legend chips for quick scanning: <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> <span style="background:#2ca02c;color:#fff;padding:2px 6px;border-radius:4px">DATA</span> <span style="background:#ff7f0e;color:#fff;padding:2px 6px;border-radius:4px">API</span> <span style="background:#9467bd;color:#fff;padding:2px 6px;border-radius:4px">UI</span> <span style="background:#d62728;color:#fff;padding:2px 6px;border-radius:4px">RISK</span>.
 
 1) Stack prerequisites
 - PHP 8.1+ with extensions: mysqli, curl, openssl, zip, gd, intl (for PDF/imagery), mbstring, json.
@@ -58,4 +58,3 @@ Purpose: step-by-step local/preview setup for the PHP SaaS app. Color chips: COR
 - Use separate config for production and disable display_errors.
 - Rotate all committed secrets before any public deployment.
 - Consider moving to `.env` + autoloader; currently no Composer autoload at root.
-

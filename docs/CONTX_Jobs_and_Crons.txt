@@ -1,0 +1,35 @@
+CONTX_Jobs_and_Crons
+Legend chip guidance: RISK for credentials, API for integrations, DATA for heavy DB ops.
+
+Likely scheduled/automation scripts (review before running):
+- [RISK] admin_daily_database_backup.php
+- [RISK] admin_database_compare_update.php
+- [RISK] admin_email_tester.php
+- [RISK] admin_gmail_tester.php
+- [API] api/xero/fetch_earnings_rates.php
+- [API] api/xero/fetch_employees.php
+- [API] api/xero/temp/fetchcal.php
+- [API] api/xero/temp/fetchorg.php
+- [API] api/xero/temp/sync_employees.php
+- [API] api/xero/xero_refresh.php
+- [API] api/xero/xero_sync.php
+- [RISK] authenticator_backup.php
+- [RISK] calendar_backend_schedule_backup.php
+- [RISK] calendar_backend_schedule_backup2.php
+- [RISK] calendar_backend_schedule_backup3.php
+- [RISK] cookie-backup.php
+- [RISK] forgot-backup.php
+- [RISK] login-backup.php
+- [RISK] nav_bars_backup.php
+- [RISK] register-backup.php
+- [DATA] sync_holidays.php
+
+Notes:
+- admin_daily_database_backup.php: generates DB backups; configure writable path and DB creds.
+- admin_database_compare_update.php: compares/updates databases; high risk on production data.
+- xero_refresh.php / xero_sync.php / fetch_employees.php / fetch_earnings_rates.php: token refresh and sync jobs for Xero API.
+- sync_holidays.php: likely pulls AU holidays into DB.
+- repeat_backend.php, scheduling-geo-in/out.php: scheduling-related background operations.
+- scan_n_deploy.php: name suggests automated deployment; inspect before running.
+- admin_email_tester.php and admin_gmail_tester.php can be used as health checks for SMTP/Gmail.
+- database_backup/ contains SQL dumps; rotate and secure.

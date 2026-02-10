@@ -1,0 +1,44 @@
+CONTX_Folder_Glossary
+Every top-level folder with file counts for quick triage.
+
+| Folder | Files | Notes |
+|---|---:|---|
+| .git | 61 | Git metadata |
+| PHPMailer | 73 | PHPMailer library copy with composer.json |
+| api | 42 | External service integrations (Xero payroll) |
+| assets | 40 | Brand/media assets and icons used by UI |
+| cache | 1 | Runtime cache |
+| call | 7 | Twilio call handlers |
+| cgi-bin | 0 | Empty placeholder for CGI on some hosts |
+| chatbot | 4 | Iframe chatbot UI |
+| css | 200 | Compiled stylesheets |
+| database_backup | 100 | SQL backups |
+| docs | 5 | (needs inspection) |
+| excel | 26 | Export templates (Excel/PHP sample) |
+| flow | 13 | Workflow diagrams/snippets |
+| font | 17 | Icon font packs |
+| gmail | 5 | Gmail OAuth helper |
+| gpt | 19 | Standalone accounting mini-app |
+| icon | 6 | SVG/ico resources |
+| images | 8 | Image assets |
+| img | 127 | Brand imagery/logos |
+| import_data | 12 | CSV/Excel import sources |
+| js | 479 | Vendor and app JS |
+| json | 8 | Static JSON samples/config |
+| logs | 1 | Log output |
+| main-files | 789 | Legacy/alternate UI pages and PHP features |
+| media | 2769 | Uploaded media library |
+| modules | 453 | Primary feature pages loaded via index.php |
+| sass | 77 | Source styles for theme |
+| signatures | 32 | Signature image storage |
+| temp_uploads | 1 | Temp upload buffer |
+| test | 13 | Testing utilities |
+| testrun | 3 | Small test harness |
+| theme-1 | 2689 | Full admin theme assets |
+| tools | 579 | HTML demo templates and supporting assets |
+| updated-files | 1 | Staging area for updated versions |
+| upload | 0 | Upload target (empty) |
+| uploads | 9 | User uploads |
+| vendor | 67 | PHPMailer + send_email helper |
+| voice_search | 22 | Captured voice search audio |
+| working-files | 2 | Temporary working area |
