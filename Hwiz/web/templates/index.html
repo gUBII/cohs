@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hwiz Local Orchestrator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Hwiz</h1>
+    <div class="meta">Local ops dashboard for COHS</div>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <h2>Control Panel</h2>
+      <div class="profile">
+        <label for="profileSelect">Server profile</label>
+        <select id="profileSelect">
+          <option value="php_builtin">PHP Built-in</option>
+          <option value="apache">Apache</option>
+        </select>
+        <button id="applyProfile">Apply</button>
+      </div>
+      <div class="actions">
+        <button data-action="start" class="action-btn">Start</button>
+        <button data-action="stop" class="action-btn">Stop</button>
+        <button data-action="restart" class="action-btn">Restart</button>
+        <button data-action="rebuild" class="action-btn emphasis">Rebuild</button>
+        <button data-action="declutter" class="action-btn warning">Declutter</button>
+      </div>
+      <div class="dry-preview" id="dryPreview">
+        Rebuild preview: validate php/ext/dirs, clear safe cache/temp/log targets, restart selected server profile, then run health checks.
+      </div>
+      <div class="dry-preview" id="declutterPreview">
+        Declutter preview: clear only cache/logs/temp_uploads and stale Hwiz pid/tmp files. Runtime business data is preserved.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Server Status</h2>
+      <div id="serverStatus" class="kv"></div>
+      <h3>Health Summary</h3>
+      <div id="healthStatus" class="kv"></div>
+    </section>
+
+    <section class="card full">
+      <h2>Operations</h2>
+      <div id="lockState" class="lock"></div>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Status</th><th>Started</th><th>Finished</th><th>Message</th></tr>
+        </thead>
+        <tbody id="operationsBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card full">
+      <h2>Logs</h2>
+      <div class="filters">
+        <input id="filterSource" placeholder="source: process/api/health" />
+        <input id="filterLevel" placeholder="level: INFO/ERROR" />
+        <button id="applyFilters">Apply</button>
+        <button id="clearLogs">Clear View</button>
+      </div>
+      <pre id="logView" class="logview"></pre>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script>
+    window.HWIZ_BOOT = {
+      defaultProfile: "{{ default_profile }}",
+      host: "{{ host }}",
+      port: {{ port }},
+      appPort: {{ app_port }}
+    };
+  </script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
