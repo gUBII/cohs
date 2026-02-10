@@ -1,0 +1,239 @@
+# REPOSITORY STRUCTURE GUIDE
+# Repository: /Users/moofasa/cohs
+# Last Updated: 2026-02-10
+# ============================================================================
+
+## DIRECTORY LAYOUT
+
+```
+/Users/moofasa/cohs/
+├── .git/                          # Git metadata (NOT for modification)
+├── .gitignore                     # Root git ignore rules
+├── .gitattributes                 # Line ending and binary configurations
+├── GIT_OPERATIONS.txt             # This guide for git operations
+├── REPOSITORY_STRUCTURE.txt       # This file - directory documentation
+│
+├── [SOURCE CODE & CORE]
+├── *.php                          # Root PHP files (main entry points)
+├── dbcon.php                      # Database connection
+├── include.php, include_*.php     # Common includes
+├── app.php                        # Application core
+│
+├── api/                           # API endpoints
+├── modules/                       # Module files
+├── main-files/                    # Additional core files
+│
+├── [USER INTERFACE]
+├── assets/                        # Stylesheets, JS, images (TRACKED)
+│   ├── css/                      # Stylesheets
+│   ├── js/                       # JavaScript files
+│   ├── img/                      # Images used in UI
+│   └── font/                     # Font files
+├── sass/                          # SASS source files
+├── theme-1/                       # Theme directory
+│   ├── media/                    # Theme-specific assets (NOT TRACKED)
+│   └── *.php                     # Theme files
+│
+├── [DATA & UPLOADS]
+├── media/                         # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+├── uploads/                       # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+├── theme-1/media/                 # EMPTY - NOT TRACKED (theme assets)
+│   └── .gitkeep                  # Preserve directory structure
+│
+├── [DEVELOPMENT & TOOLS]
+├── tools/                         # Development tools
+│   ├── .gitignore               # Tool-specific ignores
+│   └── [tool files]
+├── flow/                          # Workflow/process files
+├── excel/                         # Excel/CSV processing
+│
+├── [BACKUPS & LOGS]
+├── database_backup/               # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+├── logs/                          # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+├── error_log                      # EMPTY - NOT TRACKED (6.1GB ignored)
+├── temp_uploads/                  # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+├── cache/                         # EMPTY - NOT TRACKED
+│   └── .gitkeep                  # Preserve directory structure
+│
+└── [DEPENDENCIES]
+    ├── vendor/                    # Composer packages (NOT TRACKED)
+    ├── node_modules/              # NPM packages (NOT TRACKED)
+    ├── PHPMailer/                 # Email library
+    ├── PHPMailer.Pro.php          # Mail class
+    └── PHPMailer2.php             # Alternative mail class
+```
+
+## FILE CATEGORIES
+
+### TRACKED TYPES
+✓ .php files (PHP source code)
+✓ .js files (JavaScript)
+✓ .css files (Stylesheets)
+✓ .html files (HTML templates)
+✓ .json files (Configuration)
+✓ .yml, .yaml files (Configs)
+✓ .md, .txt files (Documentation)
+✓ Image files in assets/img (UI assets)
+✓ Font files
+✓ Configuration files
+
+### NOT TRACKED (See .gitignore)
+✗ media/* (large files)
+✗ uploads/* (user uploads)
+✗ database_backup/* (backups)
+✗ error_log (system logs)
+✗ node_modules/* (dependencies)
+✗ vendor/* (dependencies)
+✗ cache/* (generated)
+✗ .DS_Store (macOS)
+✗ .env (secrets)
+✗ IDE configs (.vscode, .idea)
+
+## KEY FILES
+
+### Configuration
+- .gitignore: Exclude rules
+- .gitattributes: Line endings, binary handling
+- GIT_OPERATIONS.txt: Git guide
+- REPOSITORY_STRUCTURE.txt: This file
+
+### Database
+- dbcon.php: Database connection config
+
+### Authentication
+- authenticator.php: Auth logic
+- authenticator_app.php: App auth
+- cookie.php, cookie_manager.php: Session handling
+
+### Main Controllers
+- app.php: Main application controller
+- dataprocessor.php: Data handling
+- formprocessor_*.php: Form submission handlers
+
+## IMPORTANT NOTES
+
+### Size Breakdown
+- Total tracked files: ~8,888
+- Directory sizes:
+  - error_log: 6.1GB (NOT TRACKED)
+  - media/: 3.7GB (NOT TRACKED)
+  - .git/: 3.1GB (repository history)
+  - theme-1/: 365MB (includes ignored media)
+  - database_backup/: 182MB (NOT TRACKED)
+
+### Optimization Status
+✓ .gitignore created (2026-02-10)
+✓ .gitattributes created (2026-02-10)
+✓ .gitkeep directories preserved
+
+NEXT STEPS (when ready):
+□ Remove large tracked files: git rm --cached on media, database_backup, error_log
+□ Optimize repository: git gc --aggressive
+□ Push changes: git push origin
+
+## COMMON OPERATIONS
+
+### Add new feature
+```bash
+git checkout -b feature/new-feature
+# Make changes
+git add .
+git commit -m "feat: add new feature"
+git push origin feature/new-feature
+```
+
+### Report a bug
+```bash
+git checkout -b bugfix/issue-description
+# Fix files
+git add .
+git commit -m "fix: resolve issue description"
+git push origin bugfix/issue-description
+```
+
+### Update documentation
+```bash
+# Edit .md or .txt files
+git add .
+git commit -m "docs: update documentation"
+git push origin main
+```
+
+### Check what's ignored
+```bash
+git check-ignore -v *
+```
+
+### List tracked files
+```bash
+git ls-files
+git ls-files | wc -l  # Count
+```
+
+### Find large tracked files
+```bash
+git ls-files -s | sort -k4 -n -r | head -20
+```
+
+## DIRECTORY PURPOSE SUMMARY
+
+| Directory | Purpose | Tracked | Size |
+|-----------|---------|---------|------|
+| api/ | REST API endpoints | ✓ | ~1MB |
+| assets/ | CSS, JS, Fonts | ✓ | ~15MB |
+| modules/ | Business logic modules | ✓ | ~88MB |
+| theme-1/ | UI Theme | Partial | ~365MB* |
+| media/ | Media uploads | ✗ | ~3.7GB |
+| uploads/ | User uploads | ✗ | ~4.5GB |
+| tools/ | Dev tools | ✓ | ~10MB |
+| database_backup/ | DB exports | ✗ | ~182MB |
+| cache/ | Runtime cache | ✗ | N/A |
+| logs/ | Application logs | ✗ | ~6.1GB* |
+
+*Partial: theme-1/ is tracked but theme-1/media/ is not
+*Partial: error_log is not tracked (6.1GB ignored)
+
+## PERFORMANCE TIPS
+
+1. **Keep repository clean**
+   - Regular: git gc
+   - Before push: Review with git diff
+
+2. **Monitor repository size**
+   - Check: du -sh .git
+   - If > 5GB: Consider cleanup
+
+3. **Prevent large files**
+   - Review before commit: git diff
+   - Use .gitignore for generated files
+
+4. **Collaboration best practices**
+   - Pull before push: git pull origin main
+   - Use feature branches
+   - Keep commits atomic (one logical change per commit)
+
+## TROUBLESHOOTING
+
+### Repository too large
+1. Check large files: git ls-files -s | sort -k4 -n -r | head
+2. Remove from tracking: git rm --cached <file>
+3. Optimize: git gc --aggressive
+
+### Cannot find file in git
+1. Check .gitignore: git check-ignore -v <file>
+2. If ignored: Add exception to .gitignore
+
+### .git/index.lock error
+```bash
+rm .git/index.lock
+```
+
+## REFERENCES
+- Git Documentation: https://git-scm.com/doc
+- .gitignore patterns: https://git-scm.com/docs/gitignore
+- .gitattributes guide: https://git-scm.com/docs/gitattributes
