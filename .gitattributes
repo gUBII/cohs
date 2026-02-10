@@ -1,0 +1,88 @@
+# Git Attributes Configuration
+# Ensures consistent handling of files across platforms
+# Last Updated: 2026-02-10
+
+# ============================================================================
+# AUTO LINE ENDING (CRLF on Windows, LF on Unix/Mac)
+# ============================================================================
+* text=auto
+
+# ============================================================================
+# UNIX LINE ENDINGS (for source code)
+# ============================================================================
+*.php text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+*.html text eol=lf
+*.htm text eol=lf
+*.xml text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+composer.json text eol=lf
+package.json text eol=lf
+
+# ============================================================================
+# WINDOWS LINE ENDINGS
+# ============================================================================
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# ============================================================================
+# BINARY FILES (do not merge, diff as binary)
+# ============================================================================
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.otf binary
+*.fon binary
+*.fnt binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.class binary
+*.jar binary
+
+# ============================================================================
+# DATABASE FILES (Binary)
+# ============================================================================
+*.db binary
+*.sqlite binary
+*.sqlite3 binary
+
+# ============================================================================
+# DOCUMENT FILES
+# ============================================================================
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+*.pdf binary
