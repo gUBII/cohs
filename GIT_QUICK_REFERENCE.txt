@@ -1,0 +1,173 @@
+# QUICK REFERENCE - GIT COMMANDS
+# Repository: /Users/moofasa/cohs
+# ============================================================================
+
+## ESSENTIAL COMMANDS
+
+### View Status
+```bash
+git status                    # Current state
+git diff                      # Changes not staged
+git diff --cached             # Changes staged
+git log --oneline -10         # Recent commits
+```
+
+### Stage & Commit
+```bash
+git add .                     # Stage all changes
+git add file.php              # Stage specific file
+git commit -m "message"       # Commit with message
+git commit --amend            # Modify last commit
+```
+
+### Push & Pull
+```bash
+git push origin main          # Push to remote
+git push                      # Push to default branch
+git pull                      # Fetch and merge
+git fetch                     # Download updates only
+```
+
+### Branches
+```bash
+git branch                    # List local branches
+git branch -a                 # List all branches
+git branch feature/name       # Create new branch
+git checkout feature/name     # Switch branch
+git checkout -b feature/name  # Create and switch
+git branch -d feature/name    # Delete branch
+```
+
+### History & Diff
+```bash
+git log                       # Full history
+git log --oneline -10         # Last 10 commits
+git log --graph --all         # Visual history
+git show commit_hash          # Show specific commit
+git diff main feature/name    # Compare branches
+```
+
+## COMMON WORKFLOWS
+
+### Create & Push Feature
+```bash
+git checkout -b feature/new-feature
+# Make changes
+git add .
+git commit -m "feat: add new feature"
+git push origin feature/new-feature
+```
+
+### Fix & Push Bug
+```bash
+git checkout -b bugfix/issue
+# Fix files
+git add .
+git commit -m "fix: resolve issue"
+git push origin bugfix/issue
+```
+
+### Update from Main
+```bash
+git fetch origin
+git merge origin/main
+# or
+git rebase origin/main
+```
+
+### Undo Changes
+```bash
+git checkout -- file.php             # Discard changes in file
+git reset HEAD file.php              # Unstage file
+git revert commit_hash               # Undo specific commit
+git reset --hard HEAD~1              # Undo last commit (CAREFUL!)
+```
+
+## CHECKING IGNORED FILES
+
+```bash
+git check-ignore -v *                # Show all ignored patterns
+git check-ignore -v file.jpg         # Check specific file
+git status --ignored                 # Show ignored files
+git ls-files --others --ignored      # List ignored files
+```
+
+## REPOSITORY INFO
+
+```bash
+git config --list               # Show all config
+git remote -v                   # Show remotes
+git branch -v                   # Show branch status
+git log --all --oneline         # Full history
+git count-objects -v            # Object count
+```
+
+## PERFORMANCE
+
+```bash
+git gc                          # Optimize
+git gc --aggressive             # Deep optimization
+git fsck                        # Check integrity
+du -sh .git                     # Check size
+```
+
+## IMPORTANT PATTERNS
+
+### DO
+✓ Create branches for features
+✓ Use descriptive commit messages
+✓ Pull before pushing
+✓ Review changes with git diff
+✓ Use git status frequently
+✓ Create .gitignore for ignored files
+
+### DON'T
+✗ Commit generated files
+✗ Commit large binaries
+✗ Commit secrets/passwords
+✗ Force push to shared branches
+✗ Commit IDE files
+✗ Mix unrelated changes
+
+## TROUBLESHOOTING
+
+### "index.lock" Error
+```bash
+rm .git/index.lock
+```
+
+### Changes Lost
+```bash
+git reflog              # Find lost commit
+git checkout hash       # Recover
+```
+
+### Too Many Commits
+```bash
+git rebase -i HEAD~5   # Interactive rebase
+```
+
+### Large Repository
+```bash
+git gc --aggressive
+git count-objects -v
+```
+
+## FILES REFERENCE
+
+- .gitignore: Rules for ignored files
+- .gitattributes: Line ending and binary configs
+- GIT_OPERATIONS.txt: Detailed git guide
+- GIT_HOOKS.txt: Pre-commit hook examples
+- GIT_MAINTENANCE.txt: Repository maintenance
+- REPOSITORY_STRUCTURE.txt: Directory layout
+
+## NEED MORE HELP?
+
+- GIT_OPERATIONS.txt: Comprehensive guide
+- REPOSITORY_STRUCTURE.txt: Directory layout
+- GIT_MAINTENANCE.txt: Maintenance procedures
+- GIT_HOOKS.txt: Pre-commit setup
+
+Git help: git help <command>
+Web: https://git-scm.com/doc
