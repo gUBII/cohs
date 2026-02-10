@@ -1,0 +1,61 @@
+CONTX_Runbook_and_Dependencies
+Purpose: step-by-step local/preview setup for the PHP SaaS app. Color chips: CORE, DATA, API, UI, RISK (HTML colored spans used in other docs).
+
+1) Stack prerequisites
+- PHP 8.1+ with extensions: mysqli, curl, openssl, zip, gd, intl (for PDF/imagery), mbstring, json.
+- MySQL/MariaDB 10.x with at least two schemas: master `saas` (holds subscription, user registry) and tenant-specific DBs set via cookie `dbname`. Additional DBs: `saas_zahid_cse13_gmail_com` (default in dbcon.php), `gpt_accounts` (for gpt mini app).
+- Web server: Apache/Nginx with ability to serve at path `/cohs` (hardcoded in include.php `$dirurl` and `$mainurl`). PHP built-in server works if you set base URL envs or edit include.php.
+- Node is not required; front-end assets are prebuilt in css/js/theme-1.
+
+2) One-time setup
+- Clone repo to desired docroot: `/Users/moofasa/cohs` (current).
+- Create `docs/` (already created) for generated context.
+- Database import: if you have SQL dumps, import into the master and tenant schemas. Backups live under `database_backup/` (check before using). The app will fail if `saas` and the tenant DB referenced by `dbname` cookie are missing.
+- Secrets: move credentials out of the code. Create `config/local.env.php` (or similar) to hold:
+  * DB_USER, DB_PASS, DB_HOST, DB_NAME_MASTER, DB_NAME_DEFAULT
+  * OPENAI_API_KEY (used in index.php JS fetch)
+  * TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER (call/make_call.php)
+  * XERO_CLIENT_ID/SECRET/REDIRECT, XERO_TENANT_ID (api/xero/*)
+  * SMTP creds for PHPMailer if not using default.
+  Then update include.php and make_call.php to pull from env vars; do not commit secrets.
+
+3) Web-server wiring (pick one)
+- Apache vhost (recommended to preserve `/cohs` base):
+  * DocumentRoot `/Users/moofasa/cohs`
+  * Alias /cohs to the same path or set ServerName `localhost` with `RewriteBase /cohs`
+  * Enable AllowOverride All if you add .htaccess for pretty URLs (currently routing is querystring based).
+- PHP built-in server (quick check):
+  * `cd /Users/moofasa/cohs`
+  * `php -S localhost:8080` and browse http://localhost:8080/index.php
+  * Edit include.php `$mainurl` to `http://localhost:8080` and `$dirurl` to `/` for local run, or set temporary env and wrap include.php with fallbacks.
+
+4) Multi-tenant login flow
+- Access `login.php`; it clears all cookies then posts to `security.php` which sets `userid` and `dbname` cookies. Without `dbname`, include.php will redirect to logout.
+- After login, `index.php` routes by `url` query to `modules/<page>.php`. Default dashboard depends on `$mtype` (ADMIN/USER/CLIENT/etc.) set in authenticator.php.
+
+5) Data storage/permissions
+- Writable: `uploads/`, `upload/`, `voice_search/`, `media/`, `database_backup/`, `call/upload/`, `temp_uploads/`, any folder that stores generated PDFs or CSVs. Ensure webserver user can write.
+- Logs: `error_log` files in several folders; rotate or symlink as needed.
+
+6) External integrations checklist
+- OpenAI: index.php inline JS posts to `https://api.openai.com/v1/chat/completions` using hardcoded bearer key. Replace with env-driven value and consider proxying via PHP to hide key.
+- Twilio: call/make_call.php uses REST API for outbound calls and expects `twiml.xml` hosted at fufoon.com/tools/call/. Update URLs if self-hosting.
+- Xero: api/xero/ has OAuth (callback.php, xero_auth.php, xero_refresh.php). Tokens stored in JSON in the same folder; set proper file permissions.
+- Gmail: gmail/gmail.php uses `token.json` OAuth token; ensure credentials.json (not in repo) is available if re-authorizing.
+- PHPMailer: vendor/PHPMailer and PHPMailer/ copies available; configure `vendor/send_email.php` or inline mailer settings.
+
+7) Helpful CLI/test endpoints
+- `test.php`, `test-dbc.php`, `imap-debug.php`, `admin_email_tester.php`, `admin_gmail_tester.php` validate DB and mail connectivity.
+- `admin_daily_database_backup.php` and `admin_database_compare_update.php` look like cron candidates; run via CLI with php.
+
+8) Running smoke test
+- Ensure DBs exist and cookies cleared.
+- Start server (Apache or php -S) with corrected `$mainurl`.
+- Browse login at /login.php; after auth, load /index.php to confirm module routing.
+- Verify XHR endpoints: open DevTools Network; actions should hit root processors like `addrecord.php`, `dataprocessor.php`, `notify.php` etc.
+
+9) Deployment pointers
+- Use separate config for production and disable display_errors.
+- Rotate all committed secrets before any public deployment.
+- Consider moving to `.env` + autoloader; currently no Composer autoload at root.
+
