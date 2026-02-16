@@ -1,0 +1,58 @@
+File: cookie.php
+
+Purpose
+- Sets auth cookies after login and orchestrates multi-step registration, including tenant DB creation and cloning.
+
+Primary flow
+- Includes include_main.php (master DB connection).
+- Login cookie set (uid/utype/samv/dbname):
+  - Clears existing userid/track/dbname cookies.
+  - Sets userid, track, dbname cookies (long TTL).
+  - Inserts LOGIN audit row.
+  - Redirects to index.php (ndis_dashboard).
+- Mobile app login cookie set (uidm/utypem/samvm/dbnamem): same cookie logic, inserts audit row with user_agent "APP" and echoes debug.
+- Registration bootstrap (uemail + logtime + logip):
+  - Normalizes email into a safe DB name prefix (saas_<email>).
+  - Inserts new user into master uerp_user with passbox set to generated DB name.
+  - Calls cPanel API to create DB and user:
+    - Host: https://sg2plmcpnl487069.prod.sin2.secureserver.net:2083
+    - User: o6gtjuthn6ia
+    - API token: HR4QGC62J43LYMYAJXLQMSVM1ZLCXKKI
+    - DB user: saas, password: Bangladesh$$786
+  - Clones schema/data from source DB saas_clone into new tenant DB using PDO.
+  - Sets multiple registration cookies (useridx, randid, firstName, lastName, sourcefrom, logtime, logip, dbnamex, newid).
+  - Inserts admin user into tenant DB and updates companysetting email.
+  - Redirects to register.php to continue wizard.
+- Registration wizard updates (driven by cookies):
+  - Updates user and companysetting fields across master and tenant DBs for firstName, lastName, gender, phone, password, company info, etc.
+  - Creates a subscription row in master for new tenant.
+  - Handles solution/module selection via cookies.
+
+Inputs
+- POST: uid, utype, samv, dbname; uidm/utypem/samvm/dbnamem; uemail, ufname, ulname, logtime, logip, sourcefrom; and many wizard fields (firstName, lastName, gender, phone, pbox, company_*).
+- Cookies: useridx, randid, firstName, lastName, sourcefrom, logtime, logip, dbnamex, newid, etc.
+
+Outputs
+- Sets/clears cookies.
+- Inserts/updates DB records (master and tenant).
+- Redirects to index.php or register.php.
+
+Data/DB
+- Master DB: uerp_user, audit, subscription.
+- Tenant DB: uerp_user, companysetting, and full clone of saas_clone tables.
+- Uses PDO for schema/data cloning.
+
+Side effects
+- Creates tenant database and user via cPanel API.
+- Copies entire schema/data from saas_clone to tenant DB.
+
+Risks / Notes
+- Contains hardcoded cPanel API token and DB credentials.
+- Uses MD5 for password storage in later steps.
+- SQL concatenation across many fields (injection risk).
+- Long-lived cookies for registration and login.
+
+Related
+- register.php (wizard UI)
+- security.php (auth flow)
+- include_main.php

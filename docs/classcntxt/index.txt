@@ -1,0 +1,43 @@
+File: index.php
+
+Purpose
+- Primary front-controller for the /cohs app. Builds full UI shell, handles routing to modules, and injects AI/voice/search/notification UI.
+
+Primary flow
+- Requires cookie userid; if missing, posts to login.php.
+- Sets base URLs mainurl=https://nexis365.com/cohs and dirurl=/cohs.
+- Includes authenticator.php to load user/company context and theme.
+- Determines sourcefrom (APP vs DESKTOP) via cookie/GET url and sets cookie.
+- Renders full HTML with head.php and nav_bars.php (unless APP view).
+- If GET url exists:
+  - Builds $url = modules/<url> and includes it (with a few remaps).
+- Else chooses default dashboard by user mtype (ADMIN/USER/CLIENT/VENDOR).
+- Injects multiple offcanvas panels (top/right/left) and modals (walkthrough, delete confirmation, search, AI wizard).
+- Adds AI sidebar with OpenAI Chat Completions via browser fetch.
+- Adds voice search modal (assets/voice-script4.js + voice_data.php).
+- Adds chatbot popup iframe (bot.php) for non-APP view.
+
+Inputs
+- Cookies: userid, dbname, sortset, sourcefrom, assistant, walkthrough flags.
+- Query string: url, id, sourcefrom.
+
+Outputs
+- Full HTML page and included module output.
+
+Data/DB
+- Uses DB connections and user/company data via authenticator.php + include.php.
+
+Side effects
+- Sets sourcefrom cookie (long TTL).
+- Includes module file directly based on GET url.
+- Browser-side OpenAI API call uses a hardcoded bearer key.
+
+Risks / Notes
+- Local file include risk: include $url from GET url without whitelist.
+- OpenAI API key is exposed client-side.
+- Voice search writes audio files under voice_search/.
+
+Related
+- authenticator.php
+- head.php, nav_bars.php, scripts.php
+- ai_wizard.php, voice_data.php, bot.php

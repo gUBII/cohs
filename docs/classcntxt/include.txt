@@ -1,0 +1,42 @@
+File: include.php
+
+Purpose
+- Core DB connection bootstrap with multi-tenant routing and subscription enforcement.
+
+Primary flow
+- Sets base URL and path: mainurl=https://nexis365.com/cohs, dirurl=/cohs.
+- If current script is /cohs/index.php:
+  - If dbname cookie exists, connects to tenant DB using dbname cookie and also to master DB (saas) as rootdb.
+  - Reads subscription for cid=dbname from master subscription table.
+  - If plan inactive or expired, redirects to subscription-plans.php via auto-submitted form.
+  - If no dbname cookie, redirects to logout.php (then login.php).
+- If current script is login/register, connects only to master DB (saas).
+- Otherwise, if dbname cookie exists, connects to tenant DB and master DB (conn_main).
+- If dbname missing, redirects to logout.php.
+
+Inputs
+- Cookies: dbname.
+- Server: PHP_SELF, HTTP_HOST, REQUEST_URI, HTTPS.
+- Query string: url (used to compare when redirecting to subscription plans).
+
+Outputs
+- $conn: tenant or master DB connection depending on context.
+- $conn_main: master DB connection for non-login pages.
+- $rootdb: master DB connection when in index.php context.
+
+Data/DB
+- MySQL credentials: host=localhost, user=saas, pass=Bangladesh$$786.
+- Master DB: saas.
+- Tenant DB: cookie dbname.
+
+Side effects
+- Redirects via auto-submitted HTML form when cookies missing or subscription inactive.
+
+Risks / Notes
+- Hardcoded DB credentials in source.
+- Assumes GET url exists in some branches; missing url can trigger notices if error reporting enabled.
+- Multi-tenant selection fully driven by cookie dbname.
+
+Related
+- include_main.php, include_sub.php, include_general.php
+- index.php (subscription enforcement triggered here)

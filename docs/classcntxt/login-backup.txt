@@ -1,0 +1,29 @@
+File: login-backup.php
+
+Purpose
+- Older/alternate login page with marketing panel and login form.
+
+Primary flow
+- Includes include.php and head-light.php.
+- Renders split layout with marketing copy and login form.
+- Login form posts to security.php (iframe target processor).
+- Links to forgot.php and register.php.
+- Includes scripts-light.php.
+
+Inputs
+- None required (static UI).
+
+Outputs
+- HTML login page.
+
+Data/DB
+- include.php may connect to master DB if PHP_SELF matches /cohs/login.php (depends on path).
+
+Side effects
+- None beyond rendering.
+
+Risks / Notes
+- Contains hardcoded sample credentials in inputs (info6@smsbd.com / 1234567).
+
+Related
+- security.php, forgot.php, register.php

@@ -1,0 +1,35 @@
+File: authenticator_backup.php
+
+Purpose
+- Older authenticator variant used by legacy pages; similar to authenticator.php but less strict.
+
+Primary flow
+- Detects mobile user agent and sets viewpoint.
+- Reads cookies and request params.
+- Defines ip_visitor_country() using geoplugin.net (HTTP).
+- Includes include.php for DB connection.
+- If userid cookie exists:
+  - Loads companysetting id=1 and user profile from uerp_user.
+  - Loads department, designation, team leader.
+  - Loads theme_customizer based on themeset.
+- Sets default title/description strings.
+
+Inputs
+- Cookies: userid, track, sortset.
+- Request: id, smsbd, bfacklink, kroyee, sheba, pointer.
+
+Outputs
+- Global variables for company, user, theme.
+
+Data/DB
+- Tables: companysetting, uerp_user, departments, designation, theme_customizer.
+
+Side effects
+- error_reporting(0) and no HTTPS enforcement.
+
+Risks / Notes
+- Uses HTTP geo lookup.
+- Weaker security posture than authenticator.php.
+
+Related
+- authenticator.php (newer version)

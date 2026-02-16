@@ -1,0 +1,27 @@
+File: include_general.php
+
+Purpose
+- Alternate fixed DB connector to a specific master DB schema.
+
+Primary flow
+- Connects to database saas_maeynuor_gmail_com with user saas.
+- Halts on connection error.
+
+Inputs
+- None (no cookies or query params used).
+
+Outputs
+- $conn: mysqli connection to saas_maeynuor_gmail_com.
+
+Data/DB
+- MySQL credentials: host=localhost, user=saas, pass=Bangladesh$$786.
+- DB: saas_maeynuor_gmail_com.
+
+Side effects
+- None beyond DB connection.
+
+Risks / Notes
+- Hardcoded credentials and fixed DB name.
+
+Related
+- include.php, include_main.php, include_sub.php

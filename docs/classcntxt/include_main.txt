@@ -1,0 +1,27 @@
+File: include_main.php
+
+Purpose
+- Simple connector for the master saas database.
+
+Primary flow
+- Connects to MySQL with host localhost, user saas, pass Bangladesh$$786, db saas.
+- Halts on connection error.
+
+Inputs
+- None.
+
+Outputs
+- $conn: mysqli connection to saas.
+
+Data/DB
+- MySQL credentials: host=localhost, user=saas, pass=Bangladesh$$786.
+- DB: saas.
+
+Side effects
+- None beyond DB connection.
+
+Risks / Notes
+- Hardcoded credentials.
+
+Related
+- include.php, security.php

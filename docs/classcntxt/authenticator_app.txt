@@ -1,0 +1,36 @@
+File: authenticator_app.php
+
+Purpose
+- Legacy/lightweight authenticator that loads company/user context using a fixed DB.
+
+Primary flow
+- Reads cookies and request params; sets defaults and time helpers.
+- Uses ip_visitor_country() (HTTP geoplugin.net) for geo info.
+- Connects directly to saas_maeynuor_gmail_com using saas credentials.
+- If userid cookie exists:
+  - Loads companysetting id=1 and assigns many globals.
+  - Loads user data from uerp_user and related department/designation/team lead.
+  - Loads theme_customizer (user or default).
+- Sets title/description defaults if missing.
+
+Inputs
+- Cookies: userid, track, sortset.
+- Request: id, smsbd, bfacklink, kroyee, sheba, pointer.
+
+Outputs
+- Global variables used in templates (company, user, theme, currency, etc.).
+
+Data/DB
+- DB: saas_maeynuor_gmail_com.
+- Tables: companysetting, uerp_user, departments, designation, theme_customizer.
+
+Side effects
+- None, aside from DB reads.
+
+Risks / Notes
+- Hardcoded DB name and credentials.
+- Error reporting is partially enabled and changed multiple times.
+- Geo lookup uses HTTP.
+
+Related
+- head.php, nav_bars.php

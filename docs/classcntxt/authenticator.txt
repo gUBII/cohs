@@ -1,0 +1,44 @@
+File: authenticator.php
+
+Purpose
+- Sets security headers, enforces HTTPS, builds global user/company context, and loads theme configuration.
+
+Primary flow
+- Sends security headers: nosniff, SAMEORIGIN, XSS protection, HSTS.
+- Redirects to HTTPS if not secure.
+- Defines clean_input() sanitizer.
+- Detects mobile user agent and sets viewpoint (DESKTOP/MOBILE).
+- Reads cookies: userid, track, sortset (sanitized).
+- Sanitizes several GET parameters (id, smsbd, bfacklink, etc.).
+- Resolves visitor country via geoplugin.net (HTTP) using IP address.
+- Sets timezone to Australia/Melbourne and derives many date/time helpers.
+- Includes include.php to establish DB connection.
+- Loads company settings (companysetting id=1) and maps many fields into globals.
+- Loads current user profile from uerp_user using userid cookie, validates status, and loads related department/designation/team lead.
+- Loads theme settings (theme_customizer) either by user or default.
+
+Inputs
+- Cookies: userid, track, sortset, dbname (indirect via include.php).
+- Query string: id, smsbd, bfacklink, kroyee, sheba, pointer, development.
+- Server: HTTPS, HTTP_HOST, REQUEST_URI, HTTP_USER_AGENT, REMOTE_ADDR.
+
+Outputs
+- Many global variables used across UI and modules (company, user, theme, permissions, currency, etc.).
+- DB connections via include.php.
+
+Data/DB
+- Tables: companysetting, uerp_user, departments, designation, theme_customizer.
+
+Side effects
+- HTTPS redirect (breaks local HTTP if not configured).
+- error_reporting(0) when development param not set.
+- External HTTP call to geoplugin.net for geo lookup.
+
+Risks / Notes
+- HTTPS redirect is unconditional; local dev needs https or adjustment.
+- Geolocation API is HTTP (not HTTPS).
+- If userid cookie missing, it does not force logout (commented out), which may leave pages accessible depending on calling code.
+
+Related
+- include.php (DB connection and tenant selection)
+- nav_bars.php, head.php, scripts.php

@@ -1,0 +1,27 @@
+File: include_sub.php
+
+Purpose
+- Tenant DB connector using MySQL root user, gated by dbname cookie.
+
+Primary flow
+- If dbname cookie exists, connects to that tenant DB using root/Bangladesh$$786.
+- Otherwise does nothing.
+
+Inputs
+- Cookies: dbname.
+
+Outputs
+- $conn: mysqli connection to tenant DB.
+
+Data/DB
+- MySQL credentials: host=localhost, user=root, pass=Bangladesh$$786.
+- DB: cookie dbname.
+
+Side effects
+- None beyond DB connection.
+
+Risks / Notes
+- Root DB user hardcoded in source; high privilege risk.
+
+Related
+- include.php (primary connector), include_main.php

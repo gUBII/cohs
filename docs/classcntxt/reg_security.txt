@@ -1,0 +1,25 @@
+File: reg_security.php
+
+Purpose
+- Placeholder registration handler (currently just alerts).
+
+Primary flow
+- Outputs a JS alert "Record updated".
+
+Inputs
+- None.
+
+Outputs
+- Script alert.
+
+Data/DB
+- None.
+
+Side effects
+- None.
+
+Risks / Notes
+- Likely unused or replaced by cookie.php and security.php.
+
+Related
+- register.php

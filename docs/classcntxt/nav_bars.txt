@@ -1,0 +1,37 @@
+File: nav_bars.php
+
+Purpose
+- Builds the main navigation bar, user menu, notifications UI, and dynamic app menus.
+
+Primary flow
+- Renders user avatar, company info, and dropdown links (profile, helpdesk, tasks, calendar, settings).
+- Shows subscription status and upgrade CTA based on $sub_splan and subscription dates.
+- Shows quick action icons (clock in/out, tasks, documents, time sheet, expenses) depending on mtype.
+- Adds notification bell and badge; JS polls notif_count.php every 8s and posts to notif_read.php to mark read.
+- Builds menu tree from solutions/modules tables with nested submenus and permission checks against designationwise_roleset.
+- Additional profile dropdown appears at far right (duplicate profile menu for quick access).
+
+Inputs
+- Global variables from authenticator.php: userid, username, email, images, companynamex, favicon, designationy, mtype, mainurl, theme, etc.
+- Subscription variables: sub_splan, sub_jdate, sub_edate (from include.php when in index.php).
+- DB: solutions, modules, designationwise_roleset, uerp_user, tasks, shifting_allocation (some in commented blocks).
+
+Outputs
+- Navbar HTML and embedded JS.
+
+Data/DB
+- Queries solutions/modules to generate menu tree.
+- (Commented) pulls tasks and schedules.
+
+Side effects
+- Regular AJAX polling to notif_count.php; posts notif_read.php.
+- Uses shiftdataV2/other JS helpers to open modals and load content.
+
+Risks / Notes
+- JS uses const userId = (int)$userId, but variable appears as $userid elsewhere; verify correct variable is set.
+- Heavy DB-driven menu rendering can be slow without indexes.
+
+Related
+- authenticator.php (context variables)
+- notif_count.php, notif_read.php, notify.php
+- scripts.php (JS helpers)

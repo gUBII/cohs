@@ -1,0 +1,30 @@
+File: cookie_set.php
+
+Purpose
+- Preference and filter cookie setter for UI behavior.
+
+Primary flow
+- Handles POSTs to set or toggle:
+  - sortset, viewmode, chartmode, rowset, guestid.
+  - filter_date_from, filter_date_to, filter_receipt_no, filter_invoice_id, filter_ledger_id, filter_employeeid, filter_t_type.
+- Echoes confirmation text for many fields.
+
+Inputs
+- POST: sortvalue, viewmode, chartmode, rowset1, gusetidx, rowsetx, rowset1/2, filter_*.
+
+Outputs
+- Sets cookies with long TTL.
+- Echoes some values.
+
+Data/DB
+- None.
+
+Side effects
+- Mutates UI preference cookies.
+
+Risks / Notes
+- Typo: $viemodey and $sortsetz referenced but not defined; may cause notices when error reporting is on.
+- Echo output used by AJAX; do not wrap in full HTML.
+
+Related
+- UI filters in modules and list pages

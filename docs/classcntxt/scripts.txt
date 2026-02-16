@@ -1,0 +1,37 @@
+File: scripts.php
+
+Purpose
+- Global JS loader and client-side utility functions; also defines notification modal HTML.
+
+Primary flow
+- Injects hidden iframe pointing to x.php (likely for background tasks).
+- Renders notification modal with bulk actions.
+- Loads vendor JS: jQuery 3.7.1, Bootstrap, OverlayScrollbars, DataTables, Chart.js, Select2, Intro.js, Plyr, Glide, etc.
+- Loads app JS: js/base/*, js/plugins/*, js/pages/*.
+- Conditionally loads jQuery UI + inspinia.js for task_manager.php and appointment_manager.php.
+- Defines printPDF and printPDF2 (html2canvas + jsPDF) for chart sections.
+- Defines many AJAX helpers for loading modules and processor endpoints.
+- Enables drag/drop sorting for solution/module lists and posts to sorting_processor_*.
+- Defines table sorting and search helpers.
+
+Inputs
+- Query string: url (for conditional asset loads).
+- DOM IDs used by printPDF and sorting helpers.
+
+Outputs
+- JS and modal HTML included on most pages.
+
+Data/DB
+- Indirectly triggers processor endpoints: sorting_processor_solutions.php, sorting_processor_modules.php.
+
+Side effects
+- Loads x.php in an iframe on every page that includes scripts.php.
+- AJAX calls to modules and processors; impacts DB when sort order changes.
+
+Risks / Notes
+- Heavy asset load; duplicates possible if other pages include their own jQuery.
+- Some helper functions build URLs by concatenation without validation.
+
+Related
+- index.php, app.php (include scripts.php)
+- sorting_processor_solutions.php, sorting_processor_modules.php

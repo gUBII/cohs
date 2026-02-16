@@ -1,0 +1,37 @@
+File: app.php
+
+Purpose
+- Secondary front-controller for the /saas base path. Loads shared UI (head/nav/footer/theme/scripts) and includes a module by query param or a default dashboard.
+
+Primary flow
+- Requires cookie userid; if missing, auto-posts to login.php.
+- Sets base URLs: mainurl=https://www.nexis365.com/saas, dirurl=/saas.
+- Includes authenticator.php to load company and user context.
+- Includes head.php, nav_bars.php, footer.php, theme_bar.php, scripts.php.
+- If GET url exists, includes modules/<url>; otherwise defaults to modules/ndis_dashboard.php.
+- Builds standard offcanvas panels and delete confirmation modal.
+- Injects chatbot iframe (bot.php) and floating open-button.
+
+Inputs
+- Cookies: userid, sortset.
+- Query string: url.
+
+Outputs
+- Full HTML page for the /saas entry.
+- Includes a module file based on GET url.
+
+Data/DB
+- Indirectly loads DB connections and user/company data via authenticator.php + include.php.
+
+Side effects
+- Auto-post redirect to login.php if not authenticated.
+- Includes unvalidated module path from GET url (same pattern as index.php).
+
+Risks / Notes
+- Uses include $url directly; needs whitelist to avoid local file include.
+- Relies on authenticator.php HTTPS redirect, which can affect local runs.
+
+Related
+- index.php (primary controller)
+- authenticator.php (auth/session context)
+- head.php, nav_bars.php, scripts.php

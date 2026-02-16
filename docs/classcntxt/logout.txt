@@ -1,0 +1,32 @@
+File: logout.php
+
+Purpose
+- Clears all cookies and redirects the user to login or a specified target.
+
+Primary flow
+- Expires all cookies server-side.
+- Runs client-side deleteAllCookies() for browser cleanup.
+- Redirects based on POST:
+  - If redirect_server set, goes to https://www.nexis365.com/<server>/login.php.
+  - Else if redirect_url set, posts to index.php with url param.
+  - Else posts to login.php.
+- Auto-submits the redirect form via JS.
+
+Inputs
+- POST: redirect_server, redirect_url.
+- Cookies: all (cleared).
+
+Outputs
+- Redirects via auto-submitted form.
+
+Data/DB
+- None.
+
+Side effects
+- Clears all cookies for the current path and domain.
+
+Risks / Notes
+- Broad cookie clearing affects other apps on same domain if shared.
+
+Related
+- login.php, register.php

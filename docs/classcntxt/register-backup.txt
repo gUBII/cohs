@@ -1,0 +1,31 @@
+File: register-backup.php
+
+Purpose
+- Legacy registration UI and wizard (older layout).
+
+Primary flow
+- Includes authenticator.php and head-light.php.
+- If userid cookie exists, forces logout then redirects back to register.php.
+- Stage 1 (no useridx cookie): collects email and posts to security.php.
+- Stage 2 (useridx cookie exists): multi-step wizard collecting personal/business info, solution selection, and referral source.
+- Posts data to cookie.php at each step.
+- Final step posts to cookie.php to complete and auto-login.
+
+Inputs
+- Cookies: useridx and wizard fields.
+- POST: remail/rotp (stage 1) via security.php; subsequent data via cookie.php.
+
+Outputs
+- HTML wizard UI.
+
+Data/DB
+- Reads menu/solutions/modules for dropdowns and selections.
+
+Side effects
+- Uses iframes to process wizard steps.
+
+Risks / Notes
+- Legacy; may diverge from current register.php flow.
+
+Related
+- security.php, cookie.php

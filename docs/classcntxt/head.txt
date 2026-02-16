@@ -1,0 +1,33 @@
+File: head.php
+
+Purpose
+- Renders the HTML <head> section, meta tags, fonts, CSS/JS includes, and common inline styles/scripts.
+
+Primary flow
+- Emits SEO/meta tags, OpenGraph, Twitter cards, favicon links.
+- Loads Google Fonts: Nunito Sans and Montserrat.
+- Loads vendor CSS: Bootstrap, OverlayScrollbars, Glide, Intro.js, Select2, DataTables, Plyr, custom styles.css and main.css.
+- Loads jQuery and FontAwesome from CDNs.
+- Defines responsive CSS helpers and UI effects (glow, blink, chat popup, hover zoom).
+- Includes drag/drop helper functions for UI widgets.
+
+Inputs
+- Variables: title, description, mainurl (used in meta and asset URLs).
+- Query string: url (for conditional JS blocks in inline script).
+
+Outputs
+- Full <head> HTML.
+
+Data/DB
+- None.
+
+Side effects
+- None (static output).
+
+Risks / Notes
+- Relies on global variables defined elsewhere; missing values can yield empty meta content.
+- Loads jQuery twice in some contexts if other pages also inject it (check scripts.php).
+
+Related
+- head-light.php, head-sub.php (public/light variants)
+- scripts.php (JS loader)

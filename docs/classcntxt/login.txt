@@ -1,0 +1,33 @@
+File: login.php
+
+Purpose
+- Public login page for /cohs. Clears cookies, shows login UI, and posts to security.php via iframe.
+
+Primary flow
+- Clears all cookies (loop over $_COOKIE and expire).
+- Includes include.php and head-light.php.
+- Renders login form that posts uid/upass to security.php (target iframe processor).
+- Adds animated branding and a hidden iframe pointing to blank-login.php for messages.
+- Includes scripts-light.php.
+- JS deleteAllCookies() runs onload to clear cookies client-side.
+
+Inputs
+- Query string: sourcefrom (used for optional CSS block).
+- Cookies: all are cleared.
+
+Outputs
+- HTML login page and POST to security.php.
+
+Data/DB
+- include.php may connect to master DB if PHP_SELF is /cohs/login.php.
+
+Side effects
+- Expunges all cookies server-side and client-side.
+
+Risks / Notes
+- Cookie clearing is broad; may affect other apps on same domain.
+
+Related
+- security.php (auth processor)
+- blank-login.php (iframe messages)
+- head-light.php, scripts-light.php

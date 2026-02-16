@@ -1,0 +1,42 @@
+File: security.php
+
+Purpose
+- Authentication and account lifecycle processor (login, registration, recovery). Outputs HTML responses and auto-posts to follow-up endpoints.
+
+Primary flow
+- Includes include_main.php for master DB and head-light.php.
+- Login flow:
+  - Hashes password via md5.
+  - Looks up uerp_user in master DB by email and password.
+  - If ref_db is not saas_ndisadmin_cohs_com_au, posts credentials to ../saas/security.php.
+  - Else verifies user exists in tenant DB and posts to cookie.php with uid/utype/dbname.
+- Forgot password (uemail): validates in master and tenant DB, then posts back to login.php.
+- Registration (remail/rotp): checks for existing user, then posts to cookie.php to create tenant data.
+- Account recovery (femail/fphone): verifies and calls email-auth.php with recovery parameters.
+- Recovery confirmation (fotp + npass): verifies OTP cookie, updates password in tenant and master DB.
+
+Inputs
+- POST: uid, upass, uemail, remail, rotp, firstName, lastName, femail, fphone, fotp, npass, cpass, sourcefrom, captcha.
+- Cookies: vcode, dbn, rid, emailid (during recovery).
+
+Outputs
+- HTML status messages.
+- Auto-submitted forms to cookie.php, login.php, or ../saas/security.php.
+
+Data/DB
+- Tables: uerp_user (master and tenant).
+- Uses md5 for password hashing.
+- Hardcoded DB credentials when connecting to tenant DB: saas/Bangladesh$$786.
+
+Side effects
+- Issues background recovery email via email-auth.php iframe.
+- Writes new password to both master and tenant DBs.
+
+Risks / Notes
+- Uses md5 for passwords (weak, unsalted).
+- SQL queries use string concatenation (SQL injection risk).
+- Some SQL has a missing AND in one query ("... unbox='..." status<>'10'") likely a bug.
+
+Related
+- login.php, cookie.php, email-auth.php
+- include_main.php

@@ -1,0 +1,41 @@
+File: register.php
+
+Purpose
+- Main registration UI and multi-step onboarding wizard for new tenants.
+
+Primary flow
+- If userid cookie exists, forces logout then redirects back to register.php.
+- Includes authenticator.php and head-light.php.
+- Determines sourcefrom (APP vs BROWSER) via cookie or GET.
+- Stage 1 (no useridx cookie): collects first/last name and email, posts to security.php to start registration.
+- Stage 2 (useridx cookie exists): multi-tab wizard:
+  - Personal info: name, gender, phone, password.
+  - Business info: company name/address/city/state/zip/country.
+  - Business type: job title, employee count, purpose, referred source.
+  - Module/solution selection: toggles solutions and dashboards.
+  - Final step: posts to cookie.php to finish and auto-login.
+- Uses cookie.php as the wizard data sink (writes into master/tenant DBs).
+
+Inputs
+- GET: sourcefrom.
+- Cookies: userid, useridx, firstName, lastName, and many wizard cookies.
+- POST: firstName/lastName/remail/rotp in stage 1 via security.php; subsequent data via cookie.php.
+
+Outputs
+- HTML wizard UI.
+- Posts to security.php (stage 1) and cookie.php (subsequent steps).
+
+Data/DB
+- Reads menu and solutions data for dropdowns and module selection.
+
+Side effects
+- Uses iframes to process wizard steps asynchronously.
+
+Risks / Notes
+- Heavily cookie-driven; users can skip steps if cookies are set manually.
+- Uses DB queries directly for menu/solutions in UI.
+
+Related
+- security.php (registration bootstrap)
+- cookie.php (wizard data sink)
+- head-light.php, scripts-light.php

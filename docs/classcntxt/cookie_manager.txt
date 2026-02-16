@@ -1,0 +1,27 @@
+File: cookie_manager.php
+
+Purpose
+- Debug utility to display current cookies and then clear them.
+
+Primary flow
+- Iterates cookies and echoes key/value pairs.
+- Iterates cookies again and expires them.
+
+Inputs
+- Cookies: all.
+
+Outputs
+- Echoed list of cookies.
+- All cookies cleared.
+
+Data/DB
+- None.
+
+Side effects
+- Clears all cookies for the current path.
+
+Risks / Notes
+- Exposes cookie values in plain output; avoid in production.
+
+Related
+- logout.php, login.php

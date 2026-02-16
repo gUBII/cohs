@@ -1,0 +1,30 @@
+File: forgot.php
+
+Purpose
+- Account recovery request UI (email + phone).
+
+Primary flow
+- Clears all cookies.
+- Renders form to collect email and registered phone.
+- Posts to security.php for recovery handling (sends recovery link/OTP).
+- Includes head-light.php and scripts-light.php.
+
+Inputs
+- GET: sourcefrom (optional styling).
+- POST: femail, fphone (sent to security.php).
+
+Outputs
+- HTML form for recovery request.
+
+Data/DB
+- None directly.
+
+Side effects
+- Clears cookies client-side and server-side.
+
+Risks / Notes
+- No CSRF protection.
+
+Related
+- security.php (recovery handler)
+- resetpassword.php
