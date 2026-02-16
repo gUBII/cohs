@@ -20,11 +20,21 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
   - [add_notification.php](add_notification.php) inserts notifications without auth.
   - [upload_audio.php](upload_audio.php) accepts uploads and writes to voice_search/ without auth.
   - notify_* endpoints allow read/mark-read based on user_id or cookies only.
+  - [calendar_backend.php](calendar_backend.php) exposes tasks CRUD without auth.
+  - [calendar_backend_schedule.php](calendar_backend_schedule.php), [calendar_backend_schedule_main.php](calendar_backend_schedule_main.php), [calendar_backend_schedule_allocated.php](calendar_backend_schedule_allocated.php), [calendar_backend_schedule_unallocated.php](calendar_backend_schedule_unallocated.php) expose shift CRUD/accept/cancel/template actions without auth.
+  - [calendar_backend_schedule_backup.php](calendar_backend_schedule_backup.php), [calendar_backend_schedule_backup2.php](calendar_backend_schedule_backup2.php), [calendar_backend_schedule_backup3.php](calendar_backend_schedule_backup3.php), [calendar_backend_schedule_x.php](calendar_backend_schedule_x.php) expose shift CRUD/accept/cancel/template actions without auth.
+  - [repeat_backend.php](repeat_backend.php) exposes repeat copy/list without auth.
+  - [scheduling-set.php](scheduling-set.php), [scheduling-unset.php](scheduling-unset.php), [scheduling-unset2.php](scheduling-unset2.php), [schedule-allocation-set.php](schedule-allocation-set.php) mutate shift state/cookies without auth/CSRF controls.
 
 ## Input Handling / Injection Risk
 - [email-auth.php](email-auth.php) uses GET params for identity and writes cookies; can be forged.
 - [chatbot/message.php](chatbot/message.php) uses root DB and LIKE on user text; even with escaping, this allows broad data probing.
 - [voice_data.php](voice_data.php) echoes cookie content without escaping (XSS risk).
+- [scheduling-set.php](scheduling-set.php) builds SQL with raw GET/POST values (clockin/out approvals, activity log, timeclock updates), creating SQLi/parameter tampering risk.
+- Multiple schedule endpoints accept GET for state changes (approve/reject, set cookies) and POST JSON without CSRF, increasing CSRF risk.
+
+## Data Integrity / Concurrency
+- Schedule backends manually compute new ids via MAX(id)+1 instead of AUTO_INCREMENT in several insert paths; risk of collisions under concurrent inserts.
 
 ## Data Exposure / Privacy
 - email_* handlers include internal logos and references to goodwillcare.net and hardcoded recipients.
