@@ -1,0 +1,30 @@
+File: dataprocessor02.php
+
+Purpose
+- Shift allocation handler tied to repeat cookies; also generates NDIS invoice entries.
+
+Primary flow
+- POST processor shiftallocation/shiftallocation1: builds shift time from cookies + input times.
+- Looks up employee/client details; inserts shift into shifting_allocation.
+- For specific tenant, calculates weekly invoice data and writes to ndis_invoices/ndis_invoices_addon.
+- Sends roster email and writes audit logs.
+
+Inputs
+- POST: processor, projectid, clientid, employeeid, stime, etime, linenumber, category, repeating, note, address, night, pcolor.
+- Cookies: reid, rday, rmonth, ryear, dbname, userid.
+
+Outputs
+- JS alerts and auto-submitted email form.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, ndis_invoices, ndis_invoices_addon, ndis_line_numbers (root DB), audit.
+
+Side effects
+- Creates shifts and invoice records.
+
+Risks / Notes
+- Heavy reliance on cookies for dates/employee.
+- Raw SQL with inputs.
+
+Related
+- schedule-allocation-set.php, email_roster.php

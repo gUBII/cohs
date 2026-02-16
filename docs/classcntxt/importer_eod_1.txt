@@ -1,0 +1,26 @@
+File: importer_eod_1.php
+
+Purpose
+- Bulk map eod_import_raw names to client/employee/manager IDs.
+
+Primary flow
+- UPDATE JOINs to fill clientid, employeeid, mamagerid using name matching.
+- Runs in a transaction and outputs counts.
+
+Inputs
+- None (no form); executes on load.
+
+Outputs
+- Plain text status with updated row counts.
+
+Data/DB
+- Tables: eod_import_raw, uerp_user.
+
+Side effects
+- Updates staging rows with matched IDs.
+
+Risks / Notes
+- Hardcoded DB credentials; no access control.
+
+Related
+- importer_eod_2.php

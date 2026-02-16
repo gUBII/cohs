@@ -1,0 +1,30 @@
+File: dataprocessor_1.php
+
+Purpose
+- Admin data maintenance for warehouses, NDIS catalog items, ledger structures, vouchers, and product metadata.
+
+Primary flow
+- GET processor: status suspend and global suspend (dynamic table/column updates).
+- POST processor: create/update warehouse, NDIS items, ledger classes/groups/accounts, vouchers, product attributes/brands/categories, designations.
+- Writes audit logs for many inserts/updates.
+
+Inputs
+- GET: processor, tid, pid, status, sid, sid1.
+- POST: processor with many entity-specific fields; file uploads for images.
+- Cookies: dbname, userid.
+
+Outputs
+- JS alerts; no JSON.
+
+Data/DB
+- Tables: warehouse, ndis_support_catelogue2, ndis_line_numbers (root DB), ledger_class/group/accounts_ledger/sub_ledger, receipt_voucher, payment_voucher, product_attributes/brands/category, designation, audit.
+
+Side effects
+- Creates/updates master data and uploads images to media/*.
+
+Risks / Notes
+- Dynamic table/column names and raw inputs in SQL.
+- No explicit auth/CSRF checks.
+
+Related
+- dataprocessor.php

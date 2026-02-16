@@ -1,0 +1,28 @@
+File: dataprocessor03.php
+
+Purpose
+- Handles profile updates, user/client intake, project creation, and CRM actions.
+
+Primary flow
+- POST processor actions: profile image update, personal info, emergency contact, support plan, experience/education/family, password reset.
+- User and client intake/update (uerp_user), project create/edit (project + shifting_schedule).
+- Additional CRM actions like deal/lead creation (file continues beyond excerpt).
+
+Inputs
+- POST: processor with many profile/project/user fields; file uploads.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: uerp_user, project, project_type, shifting_schedule, experience_data, education_data, family_data, audit, deals, leads (and others later in file).
+
+Side effects
+- Updates core user/client/project data and writes audit entries.
+
+Risks / Notes
+- Raw SQL with user input; no explicit auth checks beyond cookies.
+
+Related
+- dataprocessor.php

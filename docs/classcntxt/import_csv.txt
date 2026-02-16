@@ -1,0 +1,25 @@
+File: import_csv.php
+
+Purpose
+- Placeholder file (currently empty).
+
+Primary flow
+- No code present.
+
+Inputs
+- None.
+
+Outputs
+- None.
+
+Data/DB
+- None.
+
+Side effects
+- None.
+
+Risks / Notes
+- If reintroduced, should be protected behind admin/auth.
+
+Related
+- employee_importer.php

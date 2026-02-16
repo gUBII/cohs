@@ -6,6 +6,8 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
 - Hardcoded Google Speech-to-Text API key in [upload_audio.php](upload_audio.php); endpoint accepts uploads without auth.
 - Hardcoded OCR.Space API key in [ai_wizard.php](ai_wizard.php).
 - Hardcoded Twilio Account SID/Auth Token in [call/make_call.php](call/make_call.php).
+- Hardcoded DB credentials in CSV importers: [employee_importer.php](employee_importer.php), [client_importer.php](client_importer.php), [client_importer1.php](client_importer1.php), [importer_appointments_1.php](importer_appointments_1.php), [importer_appointments_2.php](importer_appointments_2.php), [importer_eod_1.php](importer_eod_1.php), [importer_eod_2.php](importer_eod_2.php).
+- Importers set a static password hash for created users (shared default credential).
 - Account recovery endpoint [email-auth.php](email-auth.php) sets cookies and sends OTP from GET params without auth/rate limits.
 - GET-driven email sender [global_email.php](global_email.php) can be used as open relay.
 - Gmail tester [admin_gmail_tester.php](admin_gmail_tester.php) contains app password and fixed recipient.
@@ -14,6 +16,7 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
 - [notify_poll.php](notify_poll.php) uses $mysqli but include.php defines $conn; likely runtime error.
 - [email_roster_suspend.php](email_roster_suspend.php) and [email_roster_update.php](email_roster_update.php) read $_POST["$clientname"] and similar keys; likely undefined fields.
 - [ai_wizard.php](ai_wizard.php) and [ai_wizard_processor.php](ai_wizard_processor.php) assign $found from $rs2 instead of $rs22 after insert; may keep $found unset.
+- [dataprocessor.php](dataprocessor.php) shift suspend block checks $rx1 before it is set ($rx11 is defined); may skip user lookup.
 
 ## Auth / Access Control
 - Endpoints act without verifying session or permission:
@@ -25,6 +28,8 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
   - [calendar_backend_schedule_backup.php](calendar_backend_schedule_backup.php), [calendar_backend_schedule_backup2.php](calendar_backend_schedule_backup2.php), [calendar_backend_schedule_backup3.php](calendar_backend_schedule_backup3.php), [calendar_backend_schedule_x.php](calendar_backend_schedule_x.php) expose shift CRUD/accept/cancel/template actions without auth.
   - [repeat_backend.php](repeat_backend.php) exposes repeat copy/list without auth.
   - [scheduling-set.php](scheduling-set.php), [scheduling-unset.php](scheduling-unset.php), [scheduling-unset2.php](scheduling-unset2.php), [schedule-allocation-set.php](schedule-allocation-set.php) mutate shift state/cookies without auth/CSRF controls.
+  - CSV importers expose bulk inserts without auth: [employee_importer.php](employee_importer.php), [client_importer.php](client_importer.php), [client_importer1.php](client_importer1.php).
+  - CLI-style bulk import scripts are web-accessible unless protected by server rules: [importer_appointments_1.php](importer_appointments_1.php), [importer_appointments_2.php](importer_appointments_2.php), [importer_eod_1.php](importer_eod_1.php), [importer_eod_2.php](importer_eod_2.php).
 
 ## Input Handling / Injection Risk
 - [email-auth.php](email-auth.php) uses GET params for identity and writes cookies; can be forged.
@@ -32,6 +37,7 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
 - [voice_data.php](voice_data.php) echoes cookie content without escaping (XSS risk).
 - [scheduling-set.php](scheduling-set.php) builds SQL with raw GET/POST values (clockin/out approvals, activity log, timeclock updates), creating SQLi/parameter tampering risk.
 - Multiple schedule endpoints accept GET for state changes (approve/reject, set cookies) and POST JSON without CSRF, increasing CSRF risk.
+- [dataprocessor.php](dataprocessor.php) and [dataprocessor_1.php](dataprocessor_1.php) build SQL with raw GET/POST values and dynamic table/column names; high SQLi risk.
 
 ## Data Integrity / Concurrency
 - Schedule backends manually compute new ids via MAX(id)+1 instead of AUTO_INCREMENT in several insert paths; risk of collisions under concurrent inserts.

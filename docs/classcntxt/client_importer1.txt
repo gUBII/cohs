@@ -1,0 +1,28 @@
+File: client_importer1.php
+
+Purpose
+- Alternative client CSV importer with name-splitting logic.
+
+Primary flow
+- Parses CSV, splits client name into title/first/last.
+- Inserts into uerp_user, creates project, mirrors user into root DB.
+
+Inputs
+- POST: csv_file upload.
+
+Outputs
+- HTML form plus success/failure counts and row errors.
+
+Data/DB
+- Hardcoded DB connections to tenant DB and root DB.
+- Tables: uerp_user, project (tenant), uerp_user (root).
+
+Side effects
+- Creates clients and projects; mirrors user credentials.
+
+Risks / Notes
+- No auth or access control.
+- Hardcoded DB credentials and shared default password hash.
+
+Related
+- client_importer.php

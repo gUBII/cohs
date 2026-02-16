@@ -1,0 +1,31 @@
+File: dataprocessor.php
+
+Purpose
+- Large multi-action controller for scheduling, approvals, module toggles, and record updates.
+
+Primary flow
+- GET processor actions: add department, force shift clocked, shift approve/suspend, delete record.
+- POST processor actions: cancel shift, timesheet toggles, update department/designation, solution/module switch, role assignment, schedule add/edit.
+- Sends audit entries and triggers roster emails for some actions.
+
+Inputs
+- GET: processor, shiftid, status, tbl, delid, url, id, src_employeeid, gogo, etc.
+- POST: processor, id, schedule fields, shift cancel fields, role/module ids.
+- Cookies: userid, dbname.
+
+Outputs
+- HTML/JS alerts and redirects; sometimes auto-submitted forms.
+
+Data/DB
+- Tables: departments, shifting_allocation, audit, uerp_user, project, designation, modules, solutions, userwise_roleset, designationwise_roleset, shifting_schedule.
+
+Side effects
+- Creates/updates shifts, approvals, and scheduling templates.
+- Deletes records from arbitrary tables.
+
+Risks / Notes
+- Raw SQL with user input and dynamic table names.
+- Mixed GET/POST state changes.
+
+Related
+- scheduling-set.php, email_roster_suspend.php, email_roster.php

@@ -1,0 +1,26 @@
+File: importer_appointments_2.php
+
+Purpose
+- Bulk import appointments_import_row into shifting_allocation.
+
+Primary flow
+- INSERT...SELECT with transformations for dates, accepted/cancelled status, random color, etc.
+- Runs in a transaction and outputs inserted row count.
+
+Inputs
+- None (no form); executes on load.
+
+Outputs
+- Plain text status with inserted count.
+
+Data/DB
+- Tables: appointments_import_row, shifting_allocation, project.
+
+Side effects
+- Inserts shifts into shifting_allocation.
+
+Risks / Notes
+- Hardcoded DB credentials; no access control.
+
+Related
+- importer_appointments_1.php

@@ -1,0 +1,26 @@
+File: importer_appointments_1.php
+
+Purpose
+- Bulk map appointments_import_row names to client/employee IDs.
+
+Primary flow
+- Uses SQL UPDATE JOINs to set client_id and employee_id based on name matching.
+- Runs in a transaction and outputs counts.
+
+Inputs
+- None (no form); executes on load.
+
+Outputs
+- Plain text status with updated row counts.
+
+Data/DB
+- Tables: appointments_import_row, uerp_user.
+
+Side effects
+- Updates import staging rows with matched IDs.
+
+Risks / Notes
+- Hardcoded DB credentials; no access control.
+
+Related
+- importer_appointments_2.php

@@ -1,0 +1,28 @@
+File: employee_importer.php
+
+Purpose
+- CSV uploader to bulk-create worker records in uerp_user.
+
+Primary flow
+- Accepts CSV upload, validates header, inserts 28 columns into uerp_user.
+- Uses a fixed password hash for all imported users.
+
+Inputs
+- POST: csv_file upload.
+
+Outputs
+- HTML form plus success/failure counts and row errors.
+
+Data/DB
+- Direct DB connection to saas_ndisadmin_cohs_com_au (hardcoded creds).
+- Table: uerp_user.
+
+Side effects
+- Creates user records.
+
+Risks / Notes
+- No auth or access control.
+- Hardcoded DB credentials and shared default password hash.
+
+Related
+- client_importer.php

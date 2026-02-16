@@ -1,0 +1,28 @@
+File: client_importer.php
+
+Purpose
+- CSV uploader to create client records and seed projects (plus root DB mirror).
+
+Primary flow
+- Parses CSV, inserts into uerp_user with fixed defaults.
+- Creates a project row for each client and mirrors user into root DB.
+
+Inputs
+- POST: csv_file upload.
+
+Outputs
+- HTML form plus success/failure counts and row errors.
+
+Data/DB
+- Hardcoded DB connections to tenant DB and root DB.
+- Tables: uerp_user, project (tenant), uerp_user (root).
+
+Side effects
+- Creates clients and projects; mirrors user credentials.
+
+Risks / Notes
+- No auth or access control.
+- Hardcoded DB credentials and shared default password hash.
+
+Related
+- client_importer1.php

@@ -1,0 +1,26 @@
+File: importer_eod_2.php
+
+Purpose
+- Bulk import eod_import_raw into eod_document.
+
+Primary flow
+- INSERT...SELECT with date/time parsing and field mapping.
+- Runs in a transaction and outputs inserted row count.
+
+Inputs
+- None (no form); executes on load.
+
+Outputs
+- Plain text status with inserted count.
+
+Data/DB
+- Tables: eod_import_raw, eod_document.
+
+Side effects
+- Inserts EOD documents.
+
+Risks / Notes
+- Hardcoded DB credentials; no access control.
+
+Related
+- importer_eod_1.php
