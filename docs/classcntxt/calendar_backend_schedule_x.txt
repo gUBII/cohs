@@ -1,0 +1,27 @@
+File: calendar_backend_schedule_x.php
+
+Purpose
+- Schedule API with template CRUD and apply logic.
+
+Primary flow
+- GET: template list/get and shift list with role-based visibility.
+- POST: template_save/update/delete/apply/apply_at; shift CRUD and copy logic.
+
+Inputs
+- GET: action, prjsrc, id.
+- POST JSON: action, template_id, projectid, clientid, employeeid, stime/etime, repeating, etc.
+
+Outputs
+- JSON lists and action responses.
+
+Data/DB
+- Tables: shifting_allocation, shifting_allocation_table, uerp_user, project, designation.
+
+Side effects
+- Writes template rows and applies them to shifting_allocation.
+
+Risks / Notes
+- No auth/CSRF; template apply creates shifts directly.
+
+Related
+- calendar_backend_schedule.php

@@ -1,0 +1,30 @@
+File: calendar_backend_schedule.php
+
+Purpose
+- Main JSON API for shift scheduling (shifting_allocation) with templates and repeat utilities.
+
+Primary flow
+- GET actions: clients_list, employees_list, repeat_source_list, template_list, template_get.
+- GET default: returns shifts filtered by project/client and user role; supports accepted filter.
+- POST: handles delete, accept, request_time, cancel, copy, move/resize, and shift insert/update with notifications.
+
+Inputs
+- GET: action, prjsrc, accepted, clientid, employeeid, id.
+- POST JSON: action, id, projectid, clientid, employeeid, stime/etime/start/end, repeating, night, pcolor, admin_note, address, itemnumber, etc.
+
+Outputs
+- JSON arrays for list endpoints; JSON objects for create/update actions.
+
+Data/DB
+- Tables: shifting_allocation, shifting_allocation_table, uerp_user, project, designation, notifications.
+- Root DB: ndis_line_numbers via conn_main.
+
+Side effects
+- Inserts/updates/deletes shifts; sends notifications; computes repeat/copy instances.
+
+Risks / Notes
+- No explicit auth; relies on cookies and query inputs.
+- Manual id assignment (MAX+1) in some insert paths.
+
+Related
+- calendar_backend_schedule_main.php, calendar_backend_schedule_allocated.php, calendar_backend_schedule_unallocated.php

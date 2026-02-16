@@ -1,0 +1,29 @@
+File: calendar_backend.php
+
+Purpose
+- Lightweight JSON API for task events (calendar/tasks table).
+
+Primary flow
+- GET: returns all rows from tasks as JSON.
+- POST: upserts task fields; if id is present, updates start/end, else inserts.
+
+Inputs
+- GET: none.
+- POST JSON: id (optional), title, start, end, detail, employeeid, clientid, mode, priority, projectid.
+
+Outputs
+- JSON list on GET.
+- JSON {id} on insert; empty body on update.
+
+Data/DB
+- Table: tasks.
+
+Side effects
+- Inserts/updates tasks rows.
+
+Risks / Notes
+- No auth or ownership checks.
+- Update path only changes start/end; other fields ignored.
+
+Related
+- calendar.php

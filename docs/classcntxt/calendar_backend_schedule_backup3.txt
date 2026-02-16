@@ -1,0 +1,27 @@
+File: calendar_backend_schedule_backup3.php
+
+Purpose
+- Older schedule API with accept/request/cancel flows and copy logic.
+
+Primary flow
+- GET: returns shifts for project client or all; includes role-based visibility.
+- POST: delete, accept, request_time, cancel (with mileage), plus copy/insert/update flows.
+
+Inputs
+- GET: prjsrc.
+- POST JSON: action, id, total_hour, total_hour2, cancel_reasons, shift fields.
+
+Outputs
+- JSON list or action status.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, project, designation, notifications.
+
+Side effects
+- Updates shift status and time fields; writes cancellations with totals.
+
+Risks / Notes
+- No auth/CSRF; cancel flow expects two hours fields.
+
+Related
+- calendar_backend_schedule_backup.php

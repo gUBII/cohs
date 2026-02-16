@@ -1,0 +1,28 @@
+File: clockinout.php
+
+Purpose
+- UI for active shift clock-in/clock-out flow.
+
+Primary flow
+- Uses timeclockstat cookie to load current shift details.
+- If not clocked in: shows clock-in button to scheduling-geo-in.php.
+- If clocked in: shows live timer and clock-out button to scheduling-geo-out.php.
+- Auto clock-out when schedule ends or day changes.
+
+Inputs
+- Cookies: timeclockstat, latitudez, longitudez, dbname.
+
+Outputs
+- HTML widget with forms and live timer.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, project, theme.
+
+Side effects
+- Triggers clock-in/out via scheduling-geo-* endpoints.
+
+Risks / Notes
+- Heavy reliance on cookies and client-side time.
+
+Related
+- scheduling-geo-in.php, scheduling-geo-out.php

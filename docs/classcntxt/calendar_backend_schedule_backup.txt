@@ -1,0 +1,28 @@
+File: calendar_backend_schedule_backup.php
+
+Purpose
+- Older schedule API variant with simplified GET list and POST actions.
+
+Primary flow
+- GET: returns shifts for a project client or all shifts.
+- POST: delete, accept, request_time, cancel, plus insert/update/copy logic with notifications.
+
+Inputs
+- GET: prjsrc.
+- POST JSON: action, id, stime/etime, projectid, clientid, employeeid, repeating, etc.
+
+Outputs
+- JSON list or action status.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, project, designation, notifications.
+- Root DB: ndis_line_numbers via conn_main.
+
+Side effects
+- Shift updates, cancellations, notifications.
+
+Risks / Notes
+- Manual id assignment in inserts; no auth/CSRF.
+
+Related
+- calendar_backend_schedule_backup2.php

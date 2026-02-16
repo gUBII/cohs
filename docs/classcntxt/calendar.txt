@@ -1,0 +1,30 @@
+File: calendar.php
+
+Purpose
+- Renders the calendar/appointments page shell and loads the appointments module UI.
+
+Primary flow
+- Requires user session via cookie; redirects to login if missing.
+- Includes authenticator/head/scripts and modules/appointments.php.
+- Sets UI cookies (sortset, sourcefrom) and renders offcanvas/modals.
+- Adds print/html2pdf helpers in-page.
+
+Inputs
+- Cookies: userid, sortset, sourcefrom.
+- GET: viewset (optional).
+
+Outputs
+- HTML page.
+
+Data/DB
+- Indirect via modules/appointments.php (not in this file).
+
+Side effects
+- Sets cookies for view preferences.
+
+Risks / Notes
+- Inline html2pdf auto-execution assumes element exists.
+- Heavy client-side modals/scripts.
+
+Related
+- modules/appointments.php, calendar_backend.php

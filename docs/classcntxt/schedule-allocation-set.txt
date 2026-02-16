@@ -1,0 +1,27 @@
+File: schedule-allocation-set.php
+
+Purpose
+- Cookie setter used by schedule board UI for employee/data filters and repeat context.
+
+Primary flow
+- If processor posted: sets empid22, datatarget22, getdata22 cookies.
+- If reidx posted: sets repeat cookies (reid, rday, rmonth, ryear, datatarget, getdatay).
+
+Inputs
+- POST: processor, empid2, datatarget2, getdata2, reidx, rdx, rmx, ryx, rdt, rgd.
+- Cookies: userid.
+
+Outputs
+- Plain text debugging markers (updating, -1, -2, -3).
+
+Data/DB
+- None.
+
+Side effects
+- Updates multiple cookies used by schedule views.
+
+Risks / Notes
+- No validation; cookie values fully client-controlled.
+
+Related
+- scheduling-set.php

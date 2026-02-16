@@ -1,0 +1,28 @@
+File: scheduling-geo-out.php
+
+Purpose
+- Collects geolocation for clock-out and forwards to scheduling-set.php.
+
+Primary flow
+- Reads last lat/long from cookies.
+- Uses browser geolocation API to populate hidden inputs.
+- Auto-submits to scheduling-set.php with timeclockout details.
+
+Inputs
+- POST: timeclockout, wage, overtime.
+- Cookies: latitudez, longitudez.
+
+Outputs
+- HTML/JS auto-submit form.
+
+Data/DB
+- None (handled by scheduling-set.php).
+
+Side effects
+- Updates latitude/longitude cookies.
+
+Risks / Notes
+- Relies on client-provided geolocation; no server validation.
+
+Related
+- scheduling-set.php, clockinout.php

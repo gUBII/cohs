@@ -1,0 +1,27 @@
+File: clockinout2.php
+
+Purpose
+- Compact clock-out widget for active timeclock session.
+
+Primary flow
+- Uses timeclockin cookie to compute elapsed time.
+- Renders a clock-out form that posts to scheduling-geo-out.php.
+- Auto-submits clock-out if day changes.
+
+Inputs
+- Cookies: timeclockin, shiftname, shiftclockin, shiftclockout.
+
+Outputs
+- HTML widget with elapsed timer.
+
+Data/DB
+- Tables: theme (color settings).
+
+Side effects
+- None beyond posting to scheduling-geo-out.php.
+
+Risks / Notes
+- Relies on cookies and client-side timing.
+
+Related
+- scheduling-geo-out.php

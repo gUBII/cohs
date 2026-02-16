@@ -1,0 +1,28 @@
+File: calendar_backend_schedule_unallocated.php
+
+Purpose
+- Variant of schedule API for unaccepted shifts/templates (accepted=0).
+
+Primary flow
+- GET actions mirror main schedule API but filter templates/repeat sources to accepted=0.
+- GET default: returns shifts with same visibility window logic.
+- POST: same CRUD actions as main schedule API.
+
+Inputs
+- GET: action, prjsrc, clientid, employeeid.
+- POST JSON: same fields as calendar_backend_schedule.php.
+
+Outputs
+- JSON arrays and action responses.
+
+Data/DB
+- Tables: shifting_allocation, shifting_allocation_table, uerp_user, project, designation, notifications.
+
+Side effects
+- Updates shifts and notifications.
+
+Risks / Notes
+- No explicit auth/CSRF protections.
+
+Related
+- calendar_backend_schedule.php

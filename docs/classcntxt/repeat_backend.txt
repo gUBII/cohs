@@ -1,0 +1,27 @@
+File: repeat_backend.php
+
+Purpose
+- JSON API to list and copy repeating shifts into a selected ISO week.
+
+Primary flow
+- GET action=list: returns up to 5000 shifts for a repeating label.
+- POST action=copy: duplicates selected shift ids into target week with repeat interval.
+
+Inputs
+- GET: action=list, repeating.
+- POST JSON: action=copy, ids[], weekfrom (YYYY-Www), repeating.
+
+Outputs
+- JSON: {data:[...]} for list; {status, inserted} for copy.
+
+Data/DB
+- Table: shifting_allocation; joins uerp_user for list.
+
+Side effects
+- Inserts new shift rows (resets accepted/status, clears clock fields).
+
+Risks / Notes
+- No explicit auth/CSRF checks.
+
+Related
+- calendar_backend_schedule.php

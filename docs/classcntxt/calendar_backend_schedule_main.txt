@@ -1,0 +1,28 @@
+File: calendar_backend_schedule_main.php
+
+Purpose
+- Alternate main schedule API with accepted filter support (similar to calendar_backend_schedule.php).
+
+Primary flow
+- GET actions: clients_list, employees_list, repeat_source_list, template_list, template_get.
+- GET default: returns shifts filtered by project/client and accepted query.
+- POST: same CRUD/accept/request/cancel/copy behaviors as main schedule API.
+
+Inputs
+- GET: action, prjsrc, accepted.
+- POST JSON: shift fields and action.
+
+Outputs
+- JSON lists and action responses.
+
+Data/DB
+- Tables: shifting_allocation, shifting_allocation_table, uerp_user, project, designation, notifications.
+
+Side effects
+- Inserts/updates/deletes shifts; sends notifications.
+
+Risks / Notes
+- Duplicated logic; no explicit auth/CSRF.
+
+Related
+- calendar_backend_schedule.php

@@ -1,0 +1,27 @@
+File: scheduling-unset2.php
+
+Purpose
+- Resets timeclock cookies and redirects into time-clock view.
+
+Primary flow
+- Clears timeclockstat, shiftingid2, shiftingid3.
+- Computes today and triggers scheduling-set.php with shiftingiduserx.
+
+Inputs
+- GET: unset2.
+- Cookies: userid, timeclockstat, shiftingid2, shiftingid3.
+
+Outputs
+- Auto-submit redirect HTML.
+
+Data/DB
+- None.
+
+Side effects
+- Removes cookies, triggers follow-up redirect.
+
+Risks / Notes
+- No auth checks; GET-driven cookie reset.
+
+Related
+- scheduling-set.php

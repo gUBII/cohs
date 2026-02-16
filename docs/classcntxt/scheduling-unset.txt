@@ -1,0 +1,28 @@
+File: scheduling-unset.php
+
+Purpose
+- Clears timeclock or project cookies and redirects back to clock in/out UI.
+
+Primary flow
+- If unset=timeclock, clears timeclockstat.
+- Else clears projectid.
+- Redirects to clock_in-out.php via auto-submit.
+
+Inputs
+- GET: unset.
+- Cookies: userid, timeclockstat, projectid.
+
+Outputs
+- Auto-submit redirect HTML.
+
+Data/DB
+- None.
+
+Side effects
+- Removes cookies.
+
+Risks / Notes
+- No auth checks; GET-driven cookie reset.
+
+Related
+- scheduling-set.php

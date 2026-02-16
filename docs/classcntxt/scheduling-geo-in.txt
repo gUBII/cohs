@@ -1,0 +1,29 @@
+File: scheduling-geo-in.php
+
+Purpose
+- Collects geolocation and optional photo for clock-in, then forwards to scheduling-set.php.
+
+Primary flow
+- Reads last lat/long from cookies.
+- Uses browser geolocation API to populate hidden inputs.
+- Allows image capture for clock-in.
+- Auto-submits to scheduling-set.php with timeclockin details.
+
+Inputs
+- POST: timeclockin, shiftname, shiftclockin, shiftclockout, wage, overtime.
+- Cookies: latitudez, longitudez.
+
+Outputs
+- HTML/JS auto-submit form.
+
+Data/DB
+- None (handled by scheduling-set.php).
+
+Side effects
+- Updates latitude/longitude cookies.
+
+Risks / Notes
+- Relies on client-provided geolocation; no server validation.
+
+Related
+- scheduling-set.php, clockinout.php

@@ -1,0 +1,28 @@
+File: calendar_backend_schedule_backup2.php
+
+Purpose
+- Older schedule API with insert/update of shifts and notifications.
+
+Primary flow
+- GET: returns shift list for project client or all.
+- POST: delete, update existing shift, or insert new shift with notification.
+
+Inputs
+- GET: prjsrc.
+- POST JSON: id, projectid, clientid, employeeid, stime/etime, itemnumber, night, pcolor, admin_note, address, repeating.
+
+Outputs
+- JSON list or inserted/updated event object.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, project, notifications.
+- Root DB: ndis_line_numbers via conn_main.
+
+Side effects
+- Creates/updates shifts, inserts notifications.
+
+Risks / Notes
+- Manual id assignment; no auth/CSRF.
+
+Related
+- calendar_backend_schedule_backup.php

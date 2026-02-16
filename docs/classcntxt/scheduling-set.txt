@@ -1,0 +1,32 @@
+File: scheduling-set.php
+
+Purpose
+- Central controller for scheduling UI state, timeclock actions, and shift request flows.
+
+Primary flow
+- Approve/reject time requests via GET updates.
+- Submit clock-in/out change request (request_edit) and write audit logs.
+- Sets project/shift week cookies based on GET/POST from schedule screens.
+- Handles timeclockin/timeclockout: computes allowed window, wages, overtime, updates shifting_allocation with clockin/out and location.
+
+Inputs
+- GET: request_approveid, request_rejectid, shiftingidtodayview, projectid, shiftingidtoday, shiftingiduserx, timeclock, etc.
+- POST: request_edit, shiftingid, shiftingid1, dailyclockinout, timeclockin, timeclockout, lat/long, activity_log, overtime.
+- Cookies: userid, timeclockstat, dbname, projectid, shiftingid, shiftingidtoday.
+
+Outputs
+- HTML with auto-submit redirects; JS alerts.
+
+Data/DB
+- Tables: shifting_allocation, uerp_user, project, audit.
+
+Side effects
+- Updates shifts clockin/clockout, wage/overtime, location fields.
+- Writes audit rows and sets many cookies.
+
+Risks / Notes
+- Uses GET for state changes; heavy cookie reliance.
+- SQL built from raw inputs (risk of tampering/SQLi).
+
+Related
+- scheduling-geo-in.php, scheduling-geo-out.php, clockinout.php
