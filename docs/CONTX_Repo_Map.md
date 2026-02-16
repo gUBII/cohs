@@ -2,7 +2,7 @@
 Legend: <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> <span style="background:#2ca02c;color:#fff;padding:2px 6px;border-radius:4px">DATA</span> <span style="background:#ff7f0e;color:#fff;padding:2px 6px;border-radius:4px">API</span> <span style="background:#9467bd;color:#fff;padding:2px 6px;border-radius:4px">UI</span> <span style="background:#d62728;color:#fff;padding:2px 6px;border-radius:4px">RISK</span>.
 
 ## Birds-eye
-- Total top-level folders scanned: 35; heavy ones `media` (2769 files) and `theme-1` (2689 files) carry most UI/media weight.
+- Total top-level folders scanned: 36; heavy ones `media` (2769 files), `theme-1` (2689 files), and `Hwiz` (2113 files) carry most UI/media weight.
 - Application style: classic PHP includes with cookie-driven multi-tenant DB selection, no modern framework; routing is querystring driven (e.g., `index.php?url=modules/<page>.php`).
 
 ## Top-level folders
@@ -20,6 +20,7 @@ Legend: <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius
 - <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> main-files/ (789) - additional feature PHP/HTML, likely legacy or alternate layouts.
 - <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> tools/ (579) - static HTML demo set (doctor/patient templates etc.) with its own assets.
 - <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> gpt/ (19) - mini accounting app with its own DB config (`gpt/config/db.php`).
+- <span style="background:#1f77b4;color:#fff;padding:2px 6px;border-radius:4px">CORE</span> Hwiz/ (2113) - local server runner/orchestrator (FastAPI dashboard + scripts to start/stop PHP/Apache profiles).
 - <span style="background:#ff7f0e;color:#fff;padding:2px 6px;border-radius:4px">API</span> gmail/ (5) - Gmail OAuth tokens (`token.json`), `gmail.php` helper.
 - <span style="background:#ff7f0e;color:#fff;padding:2px 6px;border-radius:4px">API</span> voice_search/ (22) - stored WebM audio captures from voice search.
 - <span style="background:#ff7f0e;color:#fff;padding:2px 6px;border-radius:4px">API</span> PHPMailer/ & vendor/ (67) - PHPMailer library vendored twice; `vendor/send_email.php` helper.

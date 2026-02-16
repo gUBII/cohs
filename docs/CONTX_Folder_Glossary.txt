@@ -13,12 +13,13 @@ Every top-level folder with file counts for quick triage.
 | chatbot | 4 | Iframe chatbot UI |
 | css | 200 | Compiled stylesheets |
 | database_backup | 100 | SQL backups |
-| docs | 5 | (needs inspection) |
+| docs | 11 | Context documentation (generated/curated) |
 | excel | 26 | Export templates (Excel/PHP sample) |
 | flow | 13 | Workflow diagrams/snippets |
 | font | 17 | Icon font packs |
 | gmail | 5 | Gmail OAuth helper |
 | gpt | 19 | Standalone accounting mini-app |
+| Hwiz | 2113 | Local runner/orchestrator dashboard (FastAPI + scripts) |
 | icon | 6 | SVG/ico resources |
 | images | 8 | Image assets |
 | img | 127 | Brand imagery/logos |

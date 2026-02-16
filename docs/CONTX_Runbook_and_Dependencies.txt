@@ -28,6 +28,10 @@ Purpose: step-by-step local/preview setup for the PHP SaaS app. Legend chips for
   * `cd /Users/moofasa/cohs`
   * `php -S localhost:8080` and browse http://localhost:8080/index.php
   * Edit include.php `$mainurl` to `http://localhost:8080` and `$dirurl` to `/` for local run, or set temporary env and wrap include.php with fallbacks.
+- Hwiz local runner (recommended for repeatable local runs):
+  * `cd /Users/moofasa/cohs/Hwiz`
+  * Create venv, install deps, and run `./scripts/run_hwiz.sh` (see Hwiz README).
+  * Open http://127.0.0.1:8787, select profile (php_builtin or apache), then Start.
 
 4) Multi-tenant login flow
 - Access `login.php`; it clears all cookies then posts to `security.php` which sets `userid` and `dbname` cookies. Without `dbname`, include.php will redirect to logout.
