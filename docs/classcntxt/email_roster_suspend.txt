@@ -1,0 +1,29 @@
+File: email_roster_suspend.php
+
+Purpose
+- Sends a shift suspension email to a staff member.
+
+Primary flow
+- On POST processor=shiftallocation:
+  - Reads semail and employeename from POST.
+  - Attempts to read clientname but uses $_POST["$clientname"] (likely bug).
+  - Sends email via mail.nexis365.com SMTP.
+
+Inputs
+- POST: processor=shiftallocation, semail, employeename, clientname (intended).
+
+Outputs
+- Email sent message or error.
+
+Data/DB
+- None.
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded SMTP credentials.
+- Variable-variable POST access likely returns empty client name.
+
+Related
+- email_roster.php

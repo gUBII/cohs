@@ -1,0 +1,29 @@
+File: ai_wizard_processor.php
+
+Purpose
+- Alternate processor to build client/project/roster/invoice based on last ai_wizard record.
+
+Primary flow
+- On POST doprocess:
+  - Loads last ai_wizard record.
+  - Creates client if missing.
+  - Creates project, schedule, allocations, service agreement, roster allocation, and invoice.
+  - Renders animation messages.
+
+Inputs
+- POST: doprocess.
+
+Outputs
+- HTML with animated messages.
+
+Data/DB
+- Tables: ai_wizard, uerp_user, project, shifting_schedule, project_team_allocation, service_agreement_addon, shifting_allocation, ndis_invoices.
+
+Side effects
+- Creates project-related records.
+
+Risks / Notes
+- Similar $found assignment bug after inserting user (uses $rs2 instead of $rs22).
+
+Related
+- ai_wizard.php

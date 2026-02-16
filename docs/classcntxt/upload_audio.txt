@@ -1,0 +1,30 @@
+File: upload_audio.php
+
+Purpose
+- Accepts audio uploads, transcribes via Google Speech-to-Text, and stores transcription.
+
+Primary flow
+- Accepts POST audioFile and saves to voice_search/.
+- Calls Google Speech-to-Text API with API key (WEBM_OPUS, 48kHz).
+- Inserts transcription into voicedata table.
+- Returns JSON with transcription and path.
+
+Inputs
+- POST: audioFile (WEBM).
+
+Outputs
+- JSON success/failure.
+
+Data/DB
+- Table: voicedata (voice_text).
+
+Side effects
+- Writes audio files to voice_search/.
+- Calls external Google API.
+
+Risks / Notes
+- Hardcoded Google API key.
+- No auth or rate limiting; accepts arbitrary uploads.
+
+Related
+- voice_search/ folder, voice_data.php

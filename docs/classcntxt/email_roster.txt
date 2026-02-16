@@ -1,0 +1,28 @@
+File: email_roster.php
+
+Purpose
+- Sends shift allocation email to a staff member via PHPMailer.
+
+Primary flow
+- On POST processor=shiftallocation:
+  - Reads semail and employeename from POST.
+  - Sends SMTP email via mail.goodwillcare.net.
+
+Inputs
+- POST: processor=shiftallocation, semail, employeename, clientname.
+
+Outputs
+- Email sent message or error.
+
+Data/DB
+- None.
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded SMTP credentials.
+- SMTP debug enabled.
+
+Related
+- email_roster_suspend.php, email_roster_update.php

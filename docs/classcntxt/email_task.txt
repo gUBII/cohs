@@ -1,0 +1,29 @@
+File: email_task.php
+
+Purpose
+- Sends task assignment email to a staff member via PHPMailer.
+
+Primary flow
+- On POST processor=tasks_manager:
+  - Reads semail and employeename from POST.
+  - Sends SMTP email via mail.goodwillcare.net.
+  - Redirects back to index.php?smsbd=tasks-manager.
+
+Inputs
+- POST: processor=tasks_manager, semail, employeename, clientname.
+
+Outputs
+- Email sent message; redirects via auto-submit.
+
+Data/DB
+- None.
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded SMTP credentials.
+- SMTP debug enabled.
+
+Related
+- email_sender.php, email_roster*.php

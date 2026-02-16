@@ -1,0 +1,32 @@
+File: email_sender.php
+
+Purpose
+- Sends a custom email to a user (by receiverid) using PHPMailer SMTP.
+
+Primary flow
+- Includes vendor PHPMailer classes.
+- On POST processor=sendemail:
+  - Loads user from uerp_user by receiverid to get name/email.
+  - Reads subject/message from POST.
+  - Sends email via SMTP mail.goodwillcare.net using admin@goodwillcare.net.
+  - Outputs success message and JS alert.
+
+Inputs
+- POST: processor=sendemail, receiverid, subject, message, semail, employeename.
+
+Outputs
+- Plain text and JS alert.
+
+Data/DB
+- Table: uerp_user (receiver lookup).
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded SMTP creds and host.
+- No auth/permission checks.
+- SMTP debug enabled (SMTP::DEBUG_SERVER) could leak info in responses.
+
+Related
+- email_task.php, email_roster*.php

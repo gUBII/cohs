@@ -1,0 +1,28 @@
+File: chatbot/message.php
+
+Purpose
+- Returns chatbot reply by matching query text in DB.
+
+Primary flow
+- Connects to MySQL as root with DB "root".
+- Reads POST text, escapes input, and runs LIKE query on chatbot table.
+- Echoes reply or fallback message.
+
+Inputs
+- POST: text.
+
+Outputs
+- Plain text reply.
+
+Data/DB
+- Table: chatbot (queries, replies).
+
+Side effects
+- None.
+
+Risks / Notes
+- Uses root DB credentials and a DB named "root" (unusual).
+- No auth; any caller can query.
+
+Related
+- bot.php

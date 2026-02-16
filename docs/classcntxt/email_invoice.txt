@@ -1,0 +1,28 @@
+File: email_invoice.php
+
+Purpose
+- Sends invoice email with a PDF link via PHPMailer (appears to be a test template).
+
+Primary flow
+- Configures PHPMailer SMTP using gmail.com.
+- Uses hardcoded receiver email/name and message.
+- Sends email and alerts on success.
+
+Inputs
+- None used in active code path (iid/lid/rid commented).
+
+Outputs
+- JS alert on success or error.
+
+Data/DB
+- None in active code path.
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded Gmail credentials and recipient.
+- Uses goodwillcare.net assets in email body.
+
+Related
+- email_sender.php, global_email.php

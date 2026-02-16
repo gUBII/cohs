@@ -1,0 +1,35 @@
+File: ai_wizard.php
+
+Purpose
+- AI-assisted workflow: upload PDF, OCR extract fields, create client/project/roster/invoice/task records, and show animated status.
+
+Primary flow
+- Includes authenticator.php and head.php.
+- Defines OCR.Space API helper for PDF and text parsing utilities.
+- On POST with fileUpload:
+  - Saves PDF to uploads/ and calls OCR.Space API.
+  - Extracts fields, then inserts into ai_wizard table.
+- Loads latest ai_wizard record and uses it to create a client and project:
+  - Creates a CLIENT user if not found.
+  - Creates project, shifting schedule, team allocations, service agreement, roster allocation, invoice, and task.
+- Renders a video + animated status messages.
+
+Inputs
+- POST: fileUpload (PDF file).
+
+Outputs
+- HTML page with animated messages.
+
+Data/DB
+- Tables: ai_wizard, uerp_user, project, shifting_schedule, project_team_allocation, service_agreement_addon, shifting_allocation, ndis_invoices, tasks.
+
+Side effects
+- Writes many records across project/roster/invoice/task tables.
+
+Risks / Notes
+- Hardcoded OCR API key.
+- Uses hardcoded placeholders for some parsed values (clientname, description, etc.).
+- Contains likely bug in post-insert user lookup ($found set from $rs2 instead of $rs22).
+
+Related
+- ai_wizard_processor.php

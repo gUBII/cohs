@@ -1,0 +1,26 @@
+File: bot.php
+
+Purpose
+- Chatbot UI widget embedded via iframe.
+
+Primary flow
+- Renders chat UI and sends user messages to message.php via AJAX.
+- Appends bot reply into chat window.
+
+Inputs
+- User text from input.
+
+Outputs
+- HTML/JS UI.
+
+Data/DB
+- None directly; message.php handles DB lookup.
+
+Side effects
+- AJAX POST to chatbot/message.php.
+
+Risks / Notes
+- Uses external FontAwesome kit and jQuery.
+
+Related
+- chatbot/message.php

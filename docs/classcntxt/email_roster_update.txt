@@ -1,0 +1,29 @@
+File: email_roster_update.php
+
+Purpose
+- Sends shift update email with timing and address details.
+
+Primary flow
+- On POST processor=shiftallocation:
+  - Reads semail and employeename.
+  - Attempts to read clientname/stime/etime/address/note using $_POST["$clientname"] etc (likely bug).
+  - Sends SMTP email via mail.goodwillcare.net.
+
+Inputs
+- POST: processor=shiftallocation, semail, employeename, clientname, stime, etime, address1, note1 (intended).
+
+Outputs
+- Email sent message or error.
+
+Data/DB
+- None.
+
+Side effects
+- Sends outbound email.
+
+Risks / Notes
+- Hardcoded SMTP credentials.
+- Variable-variable POST access likely breaks data fields.
+
+Related
+- email_roster.php

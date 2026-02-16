@@ -1,0 +1,25 @@
+File: voice.php
+
+Purpose
+- Demo page for browser text-to-speech.
+
+Primary flow
+- Renders a static page that speaks a fixed greeting on load.
+
+Inputs
+- None.
+
+Outputs
+- HTML/JS page.
+
+Data/DB
+- None.
+
+Side effects
+- Uses Web Speech API on load.
+
+Risks / Notes
+- Appears to be a standalone demo, not integrated into main app.
+
+Related
+- voice_data.php

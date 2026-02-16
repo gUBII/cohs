@@ -1,0 +1,28 @@
+File: call/make_call.php
+
+Purpose
+- Initiates an outbound Twilio call to a provided number.
+
+Primary flow
+- Reads toNumber from POST.
+- Posts to Twilio Calls API with From number and TwiML URL.
+- Echoes HTTP status and Twilio response.
+
+Inputs
+- POST: toNumber.
+
+Outputs
+- Plain text status and response.
+
+Data/DB
+- None.
+
+Side effects
+- Places outbound phone calls via Twilio.
+
+Risks / Notes
+- Hardcoded Twilio credentials and phone number.
+- No auth or rate limiting; can be abused.
+
+Related
+- call/twiml.xml

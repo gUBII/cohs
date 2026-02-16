@@ -1,0 +1,29 @@
+File: voice_data.php
+
+Purpose
+- Interprets voice command text from cookie and offers quick navigation/actions.
+
+Primary flow
+- Reads voiceresult cookie and prints it.
+- Detects keywords (create invoice, roster variants) and shows buttons/iframes.
+- Builds a list of module links by scanning solutions/modules and matching words in the voice text.
+- Includes speech synthesis helper for a hidden text input.
+
+Inputs
+- Cookies: voiceresult.
+
+Outputs
+- HTML with action buttons/links and optional iframe.
+
+Data/DB
+- Tables: solutions, modules (for building menu links).
+
+Side effects
+- None beyond rendering; can open modules via links/iframe.
+
+Risks / Notes
+- Echoes cookie content without escaping (XSS risk).
+- Performs broad DB scans and string matching.
+
+Related
+- assets/voice-script*.js, upload_audio.php

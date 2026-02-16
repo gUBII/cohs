@@ -1,0 +1,27 @@
+File: admin_gmail_tester.php
+
+Purpose
+- Sends a recovery email using PHP mail() as a tester endpoint.
+
+Primary flow
+- Builds HTML email with verification code and branding.
+- Sends to a hardcoded Gmail address.
+- Alerts success/failure.
+
+Inputs
+- None (hardcoded values).
+
+Outputs
+- JS alert.
+
+Data/DB
+- None.
+
+Side effects
+- Sends email.
+
+Risks / Notes
+- Hardcoded recipient and Bcc; uses mail() without auth or rate limit.
+
+Related
+- admin_email_tester.php, email-auth.php

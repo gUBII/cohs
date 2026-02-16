@@ -1,0 +1,28 @@
+File: admin_email_tester.php
+
+Purpose
+- Admin/test endpoint to send a recovery email via PHPMailer.
+
+Primary flow
+- Configures PHPMailer with Gmail SMTP and app password.
+- Sends a hardcoded recovery email to a fixed recipient.
+- Alerts success or error.
+
+Inputs
+- None (hardcoded recipient and content).
+
+Outputs
+- JS alert.
+
+Data/DB
+- None.
+
+Side effects
+- Sends email.
+
+Risks / Notes
+- Contains Gmail credentials and fixed recipient.
+- Should not be exposed in production.
+
+Related
+- admin_gmail_tester.php

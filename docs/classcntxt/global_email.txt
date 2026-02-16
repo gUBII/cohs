@@ -1,0 +1,28 @@
+File: global_email.php
+
+Purpose
+- Generic HTML email sender using PHP mail() with GET parameters.
+
+Primary flow
+- Reads receiver email/name/subject/body from GET.
+- Builds HTML email template with Nexis branding.
+- Sends via mail() and alerts success/failure.
+
+Inputs
+- GET: r_email, r_name, r_subject, r_body.
+
+Outputs
+- JS alert for success/failure.
+
+Data/DB
+- None.
+
+Side effects
+- Sends email using server mail().
+
+Risks / Notes
+- Open relay risk: no auth, uses GET for email content.
+- No input validation or rate limiting.
+
+Related
+- email-auth.php

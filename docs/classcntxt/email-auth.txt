@@ -1,0 +1,30 @@
+File: email-auth.php
+
+Purpose
+- Sends account recovery OTP and sets cookies for reset flow.
+
+Primary flow
+- Reads receiver email/name/dbn/rid from GET.
+- Generates random OTP, stores md5 hash in cookie vcode.
+- Stores email, rid, dbn in cookies.
+- Sends plaintext email via mail() with OTP.
+- Redirects to resetpassword.php on success.
+
+Inputs
+- GET: reml, rnm, dbn, rid.
+
+Outputs
+- Sends email, redirects to resetpassword.php.
+
+Data/DB
+- None.
+
+Side effects
+- Sets cookies: vcode, emailid, rid, dbn.
+
+Risks / Notes
+- No auth/validation on GET params; OTP/email can be triggered by anyone.
+- Uses md5 for OTP hash.
+
+Related
+- security.php, resetpassword.php
