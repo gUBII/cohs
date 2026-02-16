@@ -103,13 +103,15 @@ class ProcessManager:
             self.php_pid_file.unlink(missing_ok=True)
             pid = None
 
+        base = self.settings.app_base_path
+        health_path = f"{base}/index.php" if base and base != "/" else "/index.php"
         return {
             "profile": "php_builtin",
             "available": shutil.which("php") is not None,
             "running": running,
             "pid": pid,
             "uptime": self._uptime(pid) if pid else None,
-            "health_url": f"http://127.0.0.1:{self.settings.app_port}/index.php",
+            "health_url": f"http://127.0.0.1:{self.settings.app_port}{health_path}",
         }
 
     def _apache_status(self) -> Dict[str, Any]:
@@ -213,7 +215,7 @@ class ProcessManager:
             "-S",
             f"127.0.0.1:{self.settings.app_port}",
             "-t",
-            str(self.settings.cohs_root),
+            str(self.settings.php_docroot),
         ]
         with self.php_process_log.open("a", encoding="utf-8") as handle:
             proc = subprocess.Popen(

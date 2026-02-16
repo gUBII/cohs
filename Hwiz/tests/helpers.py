@@ -25,6 +25,8 @@ def make_settings(tmp_path: Path) -> Settings:
     return Settings(
         hwiz_root=hwiz_root,
         cohs_root=cohs_root,
+        app_base_path="/cohs",
+        php_docroot=cohs_root.parent,
         web_root=hwiz_root / "web",
         templates_dir=hwiz_root / "web" / "templates",
         static_dir=hwiz_root / "web" / "static",

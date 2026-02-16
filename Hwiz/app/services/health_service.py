@@ -106,7 +106,9 @@ class HealthService:
         if active_profile == "apache":
             probe_url = self.settings.apache_health_url
         else:
-            probe_url = f"http://127.0.0.1:{self.settings.app_port}/index.php"
+            base = self.settings.app_base_path
+            health_path = f"{base}/index.php" if base and base != "/" else "/index.php"
+            probe_url = f"http://127.0.0.1:{self.settings.app_port}{health_path}"
         probe = self._url_probe(probe_url)
 
         overall_ok = (

@@ -4,7 +4,13 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HOST="${HWIZ_HOST:-127.0.0.1}"
 PORT="${HWIZ_PORT:-8787}"
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+if [[ -n "${PYTHON_BIN:-}" ]]; then
+  PYTHON_BIN="$PYTHON_BIN"
+elif [[ -x "$ROOT_DIR/.venv/bin/python" ]]; then
+  PYTHON_BIN="$ROOT_DIR/.venv/bin/python"
+else
+  PYTHON_BIN="python3"
+fi
 PID_FILE="$ROOT_DIR/runtime/hwiz.pid"
 LOG_FILE="$ROOT_DIR/logs/hwiz-server.log"
 
@@ -20,8 +26,20 @@ if [[ -f "$PID_FILE" ]]; then
 fi
 
 cd "$ROOT_DIR"
+if ! "$PYTHON_BIN" -c "import uvicorn" >/dev/null 2>&1; then
+  echo "Python interpreter '$PYTHON_BIN' is missing uvicorn. Install requirements first."
+  exit 1
+fi
+
 nohup "$PYTHON_BIN" -m uvicorn app.main:app --host "$HOST" --port "$PORT" --app-dir "$ROOT_DIR" >> "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 echo "$SERVER_PID" > "$PID_FILE"
 
-echo "Hwiz started on http://$HOST:$PORT (pid=$SERVER_PID)"
+sleep 1
+if ! kill -0 "$SERVER_PID" 2>/dev/null; then
+  rm -f "$PID_FILE"
+  echo "Hwiz failed to start. Check $LOG_FILE for details."
+  exit 1
+fi
+
+echo "Hwiz started on http://$HOST:$PORT (pid=$SERVER_PID) using $PYTHON_BIN"

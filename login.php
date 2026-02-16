@@ -1,4 +1,4 @@
-<?php if($_GET["sourcefrom"]!="APP"){ ?>
+<?php if(($_GET["sourcefrom"] ?? "")!="APP"){ ?>
     <style>
         .bg {
             background-image: url("../assets/accounts14.jpg");
@@ -123,4 +123,3 @@
             }
         }
     </script><?php
-

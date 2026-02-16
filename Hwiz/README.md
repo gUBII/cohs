@@ -52,3 +52,5 @@ cd /Users/moofasa/cohs/Hwiz
 - `Declutter` only targets safe cache/log/temp paths and stale pid/tmp files.
 - `Rebuild` validates PHP + required extensions, validates writable dirs, runs declutter, restarts selected profile, then runs health checks.
 - Apache commands can fail with `PERMISSION_DENIED` depending on local privileges.
+- If local PHP is missing a module by design (for example Homebrew PHP compiled with `--disable-intl`), set `REQUIRED_PHP_EXTENSIONS` in `/Users/moofasa/cohs/Hwiz/.env` to the exact extension list you require.
+- If the COHS app loops between login/logout, it usually means the app is not being served under `/cohs` (the PHP app checks `$_SERVER['PHP_SELF']` against `/cohs/*`). Set `APP_BASE_PATH=/cohs` (default) and ensure the server docroot is the parent folder of `COHS_ROOT` so URLs like `/cohs/login.php` resolve.
