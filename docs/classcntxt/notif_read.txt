@@ -1,0 +1,29 @@
+File: notif_read.php
+
+Purpose
+- Marks all notifications as read for current user and returns JSON.
+
+Primary flow
+- Connects to tenant DB using dbname cookie (mysqli).
+- Reads userId from userid cookie.
+- Updates notifications set is_read=1 for user.
+- Returns { ok: true/false }.
+
+Inputs
+- Cookies: dbname, userid.
+
+Outputs
+- JSON: { ok: true } or { ok: false }.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- Marks all user notifications as read.
+
+Risks / Notes
+- Uses direct mysqli connection rather than include.php.
+
+Related
+- nav_bars.php (mark on bell click)
+- notify_mark_read.php

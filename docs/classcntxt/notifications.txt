@@ -1,0 +1,29 @@
+File: notifications.php
+
+Purpose
+- Standalone demo page for notification polling, badge update, and modal view.
+
+Primary flow
+- Uses session to set a demo USER_ID.
+- Renders Bootstrap modal and bell badge.
+- Polls notify_poll.php every 8s.
+- Loads notification list via notify_list.php.
+- Marks all read via notify_mark_read.php.
+
+Inputs
+- Session: user_id (demo default 1).
+
+Outputs
+- Full HTML page with JS-driven polling.
+
+Data/DB
+- Indirectly uses notifications via notify_* endpoints.
+
+Side effects
+- None beyond client-side polling and mark-read calls.
+
+Risks / Notes
+- Appears to be a demo/test UI, not integrated into main app.
+
+Related
+- notify_poll.php, notify_list.php, notify_mark_read.php

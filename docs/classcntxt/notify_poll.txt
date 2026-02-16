@@ -1,0 +1,30 @@
+File: notify_poll.php
+
+Purpose
+- Polling endpoint for notification badges and new IDs (JSON).
+
+Primary flow
+- Includes include.php.
+- Reads user_id and last_seen_id.
+- Computes total_unread and max_unread_id for unread notifications.
+- If last_seen_id > 0, selects unread ids greater than last_seen_id.
+- Returns JSON: success, total_unread, max_unread_id, new_ids.
+
+Inputs
+- GET: user_id, last_seen_id.
+
+Outputs
+- JSON with unread counts and new IDs.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- None.
+
+Risks / Notes
+- Uses $mysqli variable but include.php defines $conn; this will error unless $mysqli exists. Should be $conn.
+- No auth check beyond user_id param.
+
+Related
+- notifications.php (poller)

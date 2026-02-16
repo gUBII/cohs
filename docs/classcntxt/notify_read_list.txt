@@ -1,0 +1,28 @@
+File: notify_read_list.php
+
+Purpose
+- Returns list of recently read notifications as JSON.
+
+Primary flow
+- Includes include.php.
+- Reads user_id from userid cookie.
+- Selects last 50 notifications where is_read=1.
+- Returns JSON { read: [...] }.
+
+Inputs
+- Cookies: userid.
+
+Outputs
+- JSON with array of read notifications.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- None.
+
+Risks / Notes
+- No auth beyond cookie.
+
+Related
+- notify_read_selected.php

@@ -1,0 +1,30 @@
+File: notify_read_selected.php
+
+Purpose
+- Marks selected notification IDs as read for current user (JSON).
+
+Primary flow
+- Includes include.php.
+- Reads user_id from userid cookie.
+- Reads ids[] from POST, sanitizes to ints, removes invalids.
+- Builds prepared UPDATE with IN clause to set is_read=1.
+- Returns JSON with success flag and affected count.
+
+Inputs
+- Cookies: userid.
+- POST: ids[] (array of notification IDs).
+
+Outputs
+- JSON: { success: true/false, affected: <int> }.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- Marks specified notifications as read.
+
+Risks / Notes
+- Good validation and prepared statement usage.
+
+Related
+- notifications_modal.php (bulk mark selected)

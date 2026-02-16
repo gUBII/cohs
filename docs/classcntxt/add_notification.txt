@@ -1,0 +1,29 @@
+File: add_notification.php
+
+Purpose
+- Inserts a sample notification for a user (test/helper endpoint).
+
+Primary flow
+- Includes include.php to get DB connection.
+- Reads user_id from GET (defaults to 1).
+- Inserts a hardcoded title/message into notifications.
+- Echoes inserted ID.
+
+Inputs
+- GET: user_id (optional, default 1).
+
+Outputs
+- Plain text: Inserted ID: <id>.
+
+Data/DB
+- Table: notifications (fields user_id, title, message).
+
+Side effects
+- Creates a notification row.
+
+Risks / Notes
+- Hardcoded message; likely for testing only.
+- No auth check; any caller can insert.
+
+Related
+- notify_list.php, notif_count.php

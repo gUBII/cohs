@@ -1,0 +1,26 @@
+File: notification.php
+
+Purpose
+- Legacy/placeholder notification endpoint; echoes random number.
+
+Primary flow
+- Generates random number and echoes it.
+- Contains large commented-out demo UI.
+
+Inputs
+- None.
+
+Outputs
+- Random number string.
+
+Data/DB
+- None (active code path).
+
+Side effects
+- None.
+
+Risks / Notes
+- Appears to be a placeholder/test file.
+
+Related
+- notify.php

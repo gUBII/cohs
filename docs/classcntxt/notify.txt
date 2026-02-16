@@ -1,0 +1,26 @@
+File: notify.php
+
+Purpose
+- Legacy/placeholder notification endpoint; currently outputs a random number.
+
+Primary flow
+- Generates a random number and echoes it as large text.
+- Contains large commented-out HTML and sample notification UI code.
+
+Inputs
+- None.
+
+Outputs
+- Random number string in HTML.
+
+Data/DB
+- None (active code path).
+
+Side effects
+- None.
+
+Risks / Notes
+- Mostly commented demo/template content; likely not used in production.
+
+Related
+- notification.php (similar)

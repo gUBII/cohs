@@ -1,0 +1,28 @@
+File: notify_mark_read.php
+
+Purpose
+- Marks all unread notifications as read for a user (JSON).
+
+Primary flow
+- Includes include.php.
+- Reads user_id from POST.
+- Updates notifications set is_read=1 for that user.
+- Returns { success: true/false }.
+
+Inputs
+- POST: user_id.
+
+Outputs
+- JSON success flag.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- Marks all as read.
+
+Risks / Notes
+- No auth validation.
+
+Related
+- notifications.php

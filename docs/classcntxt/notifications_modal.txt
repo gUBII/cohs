@@ -1,0 +1,28 @@
+File: notifications_modal.php
+
+Purpose
+- Standalone demo page showing stacked notifications with multi-select actions.
+
+Primary flow
+- Renders Bootstrap modal with bulk select and actions.
+- Polls notify_check.php every 5s to append new unread items.
+- Uses notify_read_selected.php to mark selected items as read.
+- Uses notify_read.php to mark all as read.
+
+Inputs
+- None required (uses cookies in endpoints).
+
+Outputs
+- Full HTML page with modal and JS.
+
+Data/DB
+- Indirectly uses notifications via notify_* endpoints.
+
+Side effects
+- Client-side polling and mark-read actions.
+
+Risks / Notes
+- Demo/test page; not wired to main nav.
+
+Related
+- notify_check.php, notify_read_selected.php, notify_read.php

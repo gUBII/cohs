@@ -1,0 +1,29 @@
+File: notify_read.php
+
+Purpose
+- Marks all unread notifications as read for current user; returns plain "ok".
+
+Primary flow
+- Includes include.php.
+- Reads user_id from userid cookie.
+- Updates notifications set is_read=1 for user.
+- Echoes "ok".
+
+Inputs
+- Cookies: userid.
+
+Outputs
+- Plain text "ok".
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- Marks all unread as read.
+
+Risks / Notes
+- Minimal validation; no JSON response.
+
+Related
+- notif_read.php (JSON variant)
+- notify_mark_read.php

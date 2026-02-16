@@ -1,0 +1,30 @@
+File: notif_count.php
+
+Purpose
+- Returns unread notification count for current user as JSON.
+
+Primary flow
+- Connects to tenant DB using dbname cookie (mysqli).
+- Reads userId from userid cookie.
+- Counts notifications where is_read=0.
+- Returns { unread_count: <int> }.
+
+Inputs
+- Cookies: dbname, userid.
+
+Outputs
+- JSON: { unread_count: 0 } on error or count on success.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- None.
+
+Risks / Notes
+- Uses direct mysqli connection rather than include.php.
+- If dbname cookie missing, returns 0.
+
+Related
+- nav_bars.php (badge polling)
+- notif_read.php

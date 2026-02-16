@@ -1,0 +1,31 @@
+File: notify_list.php
+
+Purpose
+- Returns HTML list items for unread notifications (or specific ids) for a user.
+
+Primary flow
+- Includes include.php for DB connection.
+- Reads user_id (required), ids CSV (optional), limit (optional).
+- If ids provided, selects those notification rows and renders in ASC order.
+- Else selects unread notifications for user, newest first, with optional limit.
+- Outputs HTML list-group items with title, message, created_at.
+- If none, outputs "No new notifications." message.
+
+Inputs
+- GET: user_id (required), ids (csv optional), limit (optional).
+
+Outputs
+- HTML fragments (list-group-item divs).
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- None.
+
+Risks / Notes
+- Requires user_id in query; no auth verification.
+- Uses dynamic IN clause with prepared placeholders; safe.
+
+Related
+- notify_poll.php, notifications_modal.php, notifications.php

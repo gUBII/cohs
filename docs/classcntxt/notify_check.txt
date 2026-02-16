@@ -1,0 +1,29 @@
+File: notify_check.php
+
+Purpose
+- Returns unread notifications newer than a given last_id as JSON.
+
+Primary flow
+- Includes include.php.
+- Reads user_id from userid cookie and last_id from GET.
+- Selects unread notifications with id > last_id.
+- Returns JSON { new: [ {id,title,message,created_at}, ... ] }.
+
+Inputs
+- Cookies: userid.
+- GET: last_id.
+
+Outputs
+- JSON array of new notifications.
+
+Data/DB
+- Table: notifications.
+
+Side effects
+- None.
+
+Risks / Notes
+- No auth beyond cookie.
+
+Related
+- notifications_modal.php
