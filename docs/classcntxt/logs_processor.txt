@@ -1,0 +1,26 @@
+File: logs_processor.php
+
+Purpose
+- Lead/CRM helper for stage updates and cookie-based filters.
+
+Primary flow
+- Updates lead stage and follow-up date.
+- Sets cookies for lead/client/activity filters and redirects.
+
+Inputs
+- POST: processor, stageid, stageupdater, datemanager, b_lead, cid, leadsearch, activity_id, url, id.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Table: leads.
+
+Side effects
+- Updates lead fields and sets cookies.
+
+Risks / Notes
+- No explicit auth; raw SQL from request inputs.
+
+Related
+- lead_quote_processor.php

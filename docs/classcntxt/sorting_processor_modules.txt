@@ -1,0 +1,25 @@
+File: sorting_processor_modules.php
+
+Purpose
+- Saves module ordering from a drag-and-drop UI.
+
+Primary flow
+- Iterates posted page_id_array and updates modules.orders.
+
+Inputs
+- POST: page_id_array[] (module ids).
+
+Outputs
+- None (silent).
+
+Data/DB
+- Table: modules.
+
+Side effects
+- Reorders module display.
+
+Risks / Notes
+- No auth/CSRF check; raw SQL update.
+
+Related
+- sorting_processor_solutions.php

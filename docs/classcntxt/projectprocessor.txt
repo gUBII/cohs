@@ -1,0 +1,29 @@
+File: projectprocessor.php
+
+Purpose
+- Service agreement workflows, signatures, project/profile updates, and client communication book entries.
+
+Primary flow
+- Updates project and client agreement fields in multiple steps.
+- Handles signature uploads (base64) and agreement images.
+- Writes communication book/project form entries with attachments.
+- Creates projects and campaign/lead forms (later in file).
+
+Inputs
+- POST: processor with agreement data, project ids, client ids, signatures, images, category form fields.
+- Cookies: userid, dbname, projectidx, projectidsc.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: project, uerp_user, project_forms, project_sc_forms, project_multi_image, project_sc_multi_image, audit.
+
+Side effects
+- Updates project/client data and stores signatures/images under media/.
+
+Risks / Notes
+- Raw SQL and large file uploads; relies on cookies for context.
+
+Related
+- workspace_processor.php

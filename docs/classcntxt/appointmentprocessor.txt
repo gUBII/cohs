@@ -1,0 +1,29 @@
+File: appointmentprocessor.php
+
+Purpose
+- CRUD for appointments_manager with attachments and audit logging.
+
+Primary flow
+- POST appointmentlist: inserts appointment and attachments.
+- POST editappointment: updates appointment and attachments.
+- GET StatusSuspend: toggles record status on a table.
+
+Inputs
+- POST: processor, employeeid, clientid, title, detail, date1/date2, priority, mode, projectid, images.
+- GET: processor=StatusSuspend, tid, pid, status.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: appointments_manager, project_multi_image, audit.
+
+Side effects
+- Creates/updates appointments; uploads images to media/appointments.
+
+Risks / Notes
+- Raw SQL from request inputs.
+
+Related
+- taskprocessor.php

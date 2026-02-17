@@ -1,0 +1,31 @@
+File: workspace_processor.php
+
+Purpose
+- Workspace/project setup, budgeting, and service agreement processing.
+
+Primary flow
+- Sets budget project cookie.
+- Updates quotes and status.
+- Writes categorized budgeting into project and project_budget tables.
+- Updates project details, managed_by, schedules, agreement data, signatures, and service fees.
+- Generates service agreement addons and shift templates (continued in file).
+
+Inputs
+- POST: processor with project, budget, agreement, and signature fields.
+- GET: processor StatusSuspend/GlobalSuspend.
+- Cookies: userid, dbname, ws_invoice.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: quotes, project, project_budget, project_schedules, ndis_invoices, ndis_invoices_addon, service_agreement_addon, leave_holidays, audit.
+
+Side effects
+- Updates project budget data and creates service agreement addon lines.
+
+Risks / Notes
+- Raw SQL from request inputs; relies on cookies for context.
+
+Related
+- workspace_budget_processor.php, projectprocessor.php

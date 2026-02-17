@@ -1,0 +1,29 @@
+File: taskprocessor.php
+
+Purpose
+- CRUD for tasks with attachments and audit logging.
+
+Primary flow
+- POST tasklist: inserts task and attachments.
+- POST edittask: updates task and attachments.
+- GET StatusSuspend: toggles status on a table.
+
+Inputs
+- POST: processor, employeeid, clientid, title, detail, date1/date2, priority, mode, projectid, images.
+- GET: processor=StatusSuspend, tid, pid, status.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: tasks, project_multi_image, audit.
+
+Side effects
+- Creates/updates tasks; uploads images to media/tasks.
+
+Risks / Notes
+- Raw SQL from request inputs.
+
+Related
+- appointmentprocessor.php

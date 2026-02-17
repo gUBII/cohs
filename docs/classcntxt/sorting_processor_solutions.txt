@@ -1,0 +1,25 @@
+File: sorting_processor_solutions.php
+
+Purpose
+- Saves solution ordering from a drag-and-drop UI.
+
+Primary flow
+- Iterates posted page_id_array and updates solutions.orders.
+
+Inputs
+- POST: page_id_array[] (solution ids).
+
+Outputs
+- None (silent).
+
+Data/DB
+- Table: solutions.
+
+Side effects
+- Reorders solution display.
+
+Risks / Notes
+- No auth/CSRF check; raw SQL update.
+
+Related
+- sorting_processor_modules.php

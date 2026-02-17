@@ -1,0 +1,27 @@
+File: formprocessor_1.php
+
+Purpose
+- Processes large custom forms (environmental assessment checklist, aged care charter).
+
+Primary flow
+- form1: inserts 88 select/note pairs into environmental_assessment_checklist_data.
+- form2: uploads up to two images and inserts charter_of_aged_care_rights record.
+
+Inputs
+- POST: form1 or form2 fields; images1/2.
+- Cookies: dbname.
+
+Outputs
+- Plain text or JS alerts.
+
+Data/DB
+- Tables: environmental_assessment_checklist_data, charter_of_aged_care_rights.
+
+Side effects
+- File uploads to media/agreement.
+
+Risks / Notes
+- Raw SQL built from request inputs.
+
+Related
+- projectprocessor.php

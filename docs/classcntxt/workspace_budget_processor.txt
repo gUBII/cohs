@@ -1,0 +1,26 @@
+File: workspace_budget_processor.php
+
+Purpose
+- Inline updater for project_budget_allocation rows.
+
+Primary flow
+- Updates weekly flags, time windows, category/repeating, note/address, and assigned support worker.
+- Computes hour/minute duration from time1/time2.
+
+Inputs
+- POST: eid, statx, time1/time2, mon..sun, evening/night, category, repeating, note, address, supportworker.
+
+Outputs
+- None (silent updates).
+
+Data/DB
+- Table: project_budget_allocation, uerp_user.
+
+Side effects
+- Updates budget allocation records.
+
+Risks / Notes
+- No auth/CSRF check; raw SQL from inputs.
+
+Related
+- workspace_processor.php

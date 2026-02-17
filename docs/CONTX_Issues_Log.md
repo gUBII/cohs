@@ -30,6 +30,7 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
   - [scheduling-set.php](scheduling-set.php), [scheduling-unset.php](scheduling-unset.php), [scheduling-unset2.php](scheduling-unset2.php), [schedule-allocation-set.php](schedule-allocation-set.php) mutate shift state/cookies without auth/CSRF controls.
   - CSV importers expose bulk inserts without auth: [employee_importer.php](employee_importer.php), [client_importer.php](client_importer.php), [client_importer1.php](client_importer1.php).
   - CLI-style bulk import scripts are web-accessible unless protected by server rules: [importer_appointments_1.php](importer_appointments_1.php), [importer_appointments_2.php](importer_appointments_2.php), [importer_eod_1.php](importer_eod_1.php), [importer_eod_2.php](importer_eod_2.php).
+  - Many processors accept unauthenticated POSTs if invoked directly (include.php only): [appointmentprocessor.php](appointmentprocessor.php), [taskprocessor.php](taskprocessor.php), [report_processor.php](report_processor.php), [documentsprocessor.php](documentsprocessor.php), [formprocessor_1.php](formprocessor_1.php), [workspace_processor.php](workspace_processor.php), [workspace_budget_processor.php](workspace_budget_processor.php), [workspace_budget_quotation_processor.php](workspace_budget_quotation_processor.php), [sorting_processor_modules.php](sorting_processor_modules.php), [sorting_processor_solutions.php](sorting_processor_solutions.php).
 
 ## Input Handling / Injection Risk
 - [email-auth.php](email-auth.php) uses GET params for identity and writes cookies; can be forged.
@@ -38,6 +39,8 @@ Purpose: capture recon findings (no code changes). Grouped by area. Use as a bac
 - [scheduling-set.php](scheduling-set.php) builds SQL with raw GET/POST values (clockin/out approvals, activity log, timeclock updates), creating SQLi/parameter tampering risk.
 - Multiple schedule endpoints accept GET for state changes (approve/reject, set cookies) and POST JSON without CSRF, increasing CSRF risk.
 - [dataprocessor.php](dataprocessor.php) and [dataprocessor_1.php](dataprocessor_1.php) build SQL with raw GET/POST values and dynamic table/column names; high SQLi risk.
+- Processors build SQL with raw inputs across finance/projects/appointments: [invoiceprocessor.php](invoiceprocessor.php), [invoiceprocessor_gwc.php](invoiceprocessor_gwc.php), [invoiceprocessor_25082025.php](invoiceprocessor_25082025.php), [projectprocessor.php](projectprocessor.php), [accountsprocessor.php](accountsprocessor.php), [retailprocessor.php](retailprocessor.php), [appointmentprocessor.php](appointmentprocessor.php), [taskprocessor.php](taskprocessor.php).
+- Sort order endpoints accept arbitrary ID arrays and write directly to DB without auth: [sorting_processor_modules.php](sorting_processor_modules.php), [sorting_processor_solutions.php](sorting_processor_solutions.php).
 
 ## Data Integrity / Concurrency
 - Schedule backends manually compute new ids via MAX(id)+1 instead of AUTO_INCREMENT in several insert paths; risk of collisions under concurrent inserts.

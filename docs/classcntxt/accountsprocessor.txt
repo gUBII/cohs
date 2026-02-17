@@ -1,0 +1,30 @@
+File: accountsprocessor.php
+
+Purpose
+- Bookkeeping workflows for income/expense vouchers and ledger setup.
+
+Primary flow
+- Creates receipt_voucher and payment_voucher entries with optional attachments.
+- Handles expense approval and status toggles via GET.
+- Creates ledger classes/groups/accounts and forms.
+- Contains invoice generation logic later in file.
+
+Inputs
+- POST: processor with ledger/voucher fields and images.
+- GET: processor expenseapprove/expenseunapprove with ids.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: receipt_voucher, payment_voucher, ledger_class, ledger_group, accounts_ledger, audit, form_builder.
+
+Side effects
+- Writes finance records and uploads to media/bookkeeping.
+
+Risks / Notes
+- Raw SQL from request inputs; approvals via GET.
+
+Related
+- invoiceprocessor.php

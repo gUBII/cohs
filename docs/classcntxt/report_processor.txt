@@ -1,0 +1,28 @@
+File: report_processor.php
+
+Purpose
+- Handles report forms: incident, EOD, EOD document, BOC, and related updates.
+
+Primary flow
+- Updates existing incident/EOD documents.
+- Inserts new EOD/EOD document/BOC/incident rows.
+- Uploads images to media/documents for incidents.
+
+Inputs
+- POST: url identifies report type; many form fields.
+- Cookies: userid.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: incident, eod, eod_document, boc, multi_image, audit.
+
+Side effects
+- Writes report records and uploads files.
+
+Risks / Notes
+- Raw SQL from request inputs; keyword alerts for "Hospital"/"Fall" are client-side only.
+
+Related
+- importer_eod_2.php

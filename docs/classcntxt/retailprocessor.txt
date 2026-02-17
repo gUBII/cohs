@@ -1,0 +1,30 @@
+File: retailprocessor.php
+
+Purpose
+- Retail/inventory actions: products, purchase vouchers, and generic table updates.
+
+Primary flow
+- GlobalSuspend/StatusSuspend for arbitrary tables.
+- Inserts/updates products with images and policy fields.
+- Inserts purchase vouchers and processes purchases into inventory queue.
+- Includes ledger_class updates (continued in file).
+
+Inputs
+- GET: processor=StatusSuspend/GlobalSuspend with table/field ids.
+- POST: processor new/edit product, purchase voucher actions, delete/update records.
+- Cookies: dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: product, purchase_voucher, product_in_queue, ledger_class, etc.
+
+Side effects
+- Uploads product images to media/products.
+
+Risks / Notes
+- Dynamic table updates and raw SQL inputs.
+
+Related
+- accountsprocessor.php

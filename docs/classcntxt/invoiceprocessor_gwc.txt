@@ -1,0 +1,27 @@
+File: invoiceprocessor_gwc.php
+
+Purpose
+- Variant invoice processor for NDIS templates and receipt generation.
+
+Primary flow
+- Creates invoice templates, generates receipt_voucher from invoice addons, marks invoices paid.
+- Updates invoice header fields and addon lines.
+
+Inputs
+- POST: processor with invoice fields and line item details.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: ndis_invoices, ndis_invoices_addon, receipt_voucher, shifting_allocation, audit.
+
+Side effects
+- Writes invoice/receipt data and audit logs.
+
+Risks / Notes
+- Raw SQL from request inputs; similar to invoiceprocessor.php.
+
+Related
+- invoiceprocessor.php

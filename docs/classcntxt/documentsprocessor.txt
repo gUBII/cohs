@@ -1,0 +1,29 @@
+File: documentsprocessor.php
+
+Purpose
+- Manage document categories and global document uploads.
+
+Primary flow
+- GlobalSuspend updates arbitrary table fields.
+- Creates/edits module categories.
+- Uploads documents to global_documents and multi_documents.
+
+Inputs
+- GET: processor=GlobalSuspend, tid, sid, sid1, status.
+- POST: processor create/edit category, uploaddocuments, edit_uploaddocuments.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: modules, global_documents, multi_documents, audit.
+
+Side effects
+- File uploads to media/documents.
+
+Risks / Notes
+- Dynamic table/column updates and raw SQL inputs.
+
+Related
+- report_processor.php

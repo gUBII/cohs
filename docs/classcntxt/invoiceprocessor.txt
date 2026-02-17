@@ -1,0 +1,30 @@
+File: invoiceprocessor.php
+
+Purpose
+- NDIS invoice template creation, invoice addon generation, and invoice payment/receipt generation.
+
+Primary flow
+- Creates invoice templates from shifting_allocation for a project/date range.
+- Inserts invoice addon lines for line items and mileage.
+- Generates receipt_voucher records from invoice addons and marks invoices paid.
+- Supports invoice field updates and batch payment status updates.
+
+Inputs
+- POST: processor plus invoice dates, client/project ids, invoice numbers, line item ids, rate/frequency, etc.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: ndis_invoices, ndis_invoices_addon, receipt_voucher, shifting_allocation, project, uerp_user, audit, ndis_line_numbers (root).
+
+Side effects
+- Creates invoice templates/addons, generates receipts, marks invoices paid, writes audit rows.
+
+Risks / Notes
+- Raw SQL built from request values; heavy side effects.
+- Duplicate logic with invoiceprocessor_gwc.php and invoiceprocessor_25082025.php.
+
+Related
+- invoiceprocessor_gwc.php, invoiceprocessor_25082025.php

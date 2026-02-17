@@ -1,0 +1,30 @@
+File: setting_processor.php
+
+Purpose
+- System settings, account creation, branding assets, and campaign/lead setup.
+
+Primary flow
+- Updates company walkthrough flags and branding assets.
+- Creates new accounts with default password hash; mirrors to root DB.
+- Edits account fields and uploads profile/project/company images.
+- Creates campaigns/leads/projects and updates company settings.
+
+Inputs
+- GET: processor, removeimageid, id, url.
+- POST: processor with account/branding/campaign/project fields and images.
+- Cookies: userid, dbname.
+
+Outputs
+- JS alerts and redirects.
+
+Data/DB
+- Tables: companysetting, uerp_user (tenant and root), campaigns, leads, project, audit.
+
+Side effects
+- Creates users and campaign/lead/project rows; uploads images to media/.
+
+Risks / Notes
+- Uses shared default password hash; raw SQL from inputs.
+
+Related
+- dataprocessor03.php
