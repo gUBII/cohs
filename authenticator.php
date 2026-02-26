@@ -5,8 +5,9 @@
     header("X-XSS-Protection: 1; mode=block");
     header("Strict-Transport-Security: max-age=63072000; includeSubDomains; preload");
     
-    // Ensure HTTPS (redirect if not secure)
-    if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
+    // Ensure HTTPS (redirect if not secure) — skip on localhost
+    $is_local_host = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1']);
+    if (!$is_local_host && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off")) {
         $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         header("Location: $redirect");
         exit;
@@ -46,8 +47,7 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 3);
         $response = curl_exec($ch);
-        curl_close($ch);
-    
+
         if (!$response) return "Unknown";
     
         $data = json_decode($response, true);

@@ -1,8 +1,13 @@
 <?php
 
     $urlfile=$_SERVER['PHP_SELF'];
-    $mainurl="https://nexis365.com/cohs";
-    $dirurl="/cohs";
+    if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
+        $mainurl = "http://" . $_SERVER['HTTP_HOST'];
+        $dirurl = "";
+    } else {
+        $mainurl="https://nexis365.com/cohs";
+        $dirurl="/cohs";
+    }
 
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $domain = $_SERVER['HTTP_HOST'];
@@ -11,14 +16,22 @@
     
     // echo"[ $urlfile ".$_COOKIE["dbname"]." ]";
 
+    // Use TCP loopback locally to avoid missing MySQL socket issues.
+    $dbHost = getenv('COHS_DB_HOST');
+    if (!$dbHost) {
+        $dbHost = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1')
+            ? '127.0.0.1'
+            : 'localhost';
+    }
+
     // nexix database connection.
-    if($urlfile=="/cohs/index.php"){
+    if($urlfile==$dirurl."/index.php"){
         if(isset($_COOKIE["dbname"])){
             // echo"[1]";
-            $conn = new mysqli('localhost', 'saas', 'Bangladesh$$786', $_COOKIE['dbname']);
+            $conn = new mysqli($dbHost, 'saas', 'Bangladesh$$786', $_COOKIE['dbname']);
             if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
             
-            $rootdb = new mysqli('localhost', 'saas', 'Bangladesh$$786', 'saas');
+            $rootdb = new mysqli($dbHost, 'saas', 'Bangladesh$$786', 'saas');
             if ($rootdb->connect_error) die("Connection failed: " . $rootdb->connect_error);
             
             $sub_splan=0;
@@ -57,16 +70,16 @@
             ?> <script language=JavaScript> document.main.submit(); </script> <?php
         }
     }else{
-        if($urlfile=="/cohs/login.php" || $urlfile=="/cohs/register.php"){
+        if($urlfile==$dirurl."/login.php" || $urlfile==$dirurl."/register.php"){
             // echo"[3]";
-            $conn = new mysqli('localhost', 'saas', 'Bangladesh$$786', 'saas');
+            $conn = new mysqli($dbHost, 'saas', 'Bangladesh$$786', 'saas');
             if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
         }else{
             if(isset($_COOKIE["dbname"])){
                 // echo"[4]";
-                $conn = new mysqli('localhost', 'saas', 'Bangladesh$$786', $_COOKIE['dbname']);
+                $conn = new mysqli($dbHost, 'saas', 'Bangladesh$$786', $_COOKIE['dbname']);
                 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-                $conn_main = new mysqli('localhost', 'saas', 'Bangladesh$$786', 'saas');
+                $conn_main = new mysqli($dbHost, 'saas', 'Bangladesh$$786', 'saas');
                 if ($conn_main->connect_error) die("Connection failed: " . $conn_main->connect_error);
             }else{
                 // echo"[5]";
